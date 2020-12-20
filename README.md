@@ -18,5 +18,7 @@ TODO:
 
 - [ ] load & save drawing
 	- HARDER: load SVG and parse elements to allow editing saved file
-	- EASIER: save/load session data in a serialized file pickle/JASON
+	- EASIER: save/load session data in a serialized file
+		REALLY EASY: pickle
+		I'd have to look: JSON
 
