@@ -16,6 +16,7 @@ TODO:
 - [ ] save SVG with timestamp on name
 	- [ ] save SVG to user selected file
 
-HARDER: load SVG and parse elements to edit saved file
-EASIER: save/load session data in serialized file pickle/JASON
+- [ ] load & save drawing
+	- HARDER: load SVG and parse elements to allow editing saved file
+	- EASIER: save/load session data in a serialized file pickle/JASON
 
