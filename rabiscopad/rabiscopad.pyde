@@ -21,7 +21,7 @@ SKETCH_MODE, LINE_MODE, CIRC_MODE, SELECT_MODE = range(4)
 current_mode = SKETCH_MODE
 
 def setup():
-    # fullScreen()  # to use this, diable size()
+    # fullScreen()  # to use this, disable size()
     size(500, 500)  # disable this to use fullScreen()
 
 def draw():

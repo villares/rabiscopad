@@ -7,6 +7,13 @@ Developed by by [Alexandre B A Villares](http://twitter.com/villares) and [Foad 
 ![image1](docs/assets/readme_animation1.gif)
 ![image2](docs/assets/readme_animation2.gif)
 
+### Keyboard shortcuts:
+
+- <kbd>s</kbd> save SVG
+- <kbd>c</kbd> draw circle
+- <kbd>l</kbd> draw line
+- <kbd>Space</kbd> fre hand draw mode
+
 ## change log:
 
 - v2020_12_19 exporting SVG now!
@@ -26,4 +33,27 @@ Developed by by [Alexandre B A Villares](http://twitter.com/villares) and [Foad 
 	- EASIER: save/load session data in a serialized file
 		REALLY EASY: pickle
 		I'd have to look: JSON
+
+- [ ] elements
+	- rectangle
+	- triangle
+	- polygon
+
+- [ ] snapping
+
+- [ ] features:
+	- import / export image
+	- import / open SVG
+	- layers
+	- transform / rotate
+	- zoom and pan
+	- change background
+
+- [ ] keyboard shortcuts
+	- cmd + s --> save
+	- cmd + z --> undo
+	- cmd + r --> redo
+	- cmd + d --> duplicate selected / last drawn
+	- 
+
 
