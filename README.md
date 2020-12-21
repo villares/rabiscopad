@@ -2,7 +2,7 @@
 
 A bare-bones SVG sketchpad - Licensed under GPL v3.0
 
-Developed by by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. Farimani](https://twitter.com/fsfarimani)
+Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. Farimani](https://twitter.com/fsfarimani)
 
 ![image1](docs/assets/readme_animation1.gif)
 ![image2](docs/assets/readme_animation2.gif)
@@ -41,17 +41,20 @@ Developed by by [Alexandre B A Villares](http://twitter.com/villares) and [Foad 
 
 - [ ] snapping
 	- ruler
-	- 
+	- ? objects (possibly very hard)
 
 - [ ] features:
-	- import / export image
-	- import / open SVG
-	- layers
-	- transform / rotate
-	- zoom and pan
+	- import image - maybe hard
+	- export raster image (PNG) - easy peasy
+	- import / open SVG (HARD)
+	- layers (maybe hard)
+	- zoom and pan (maybe hard...)
 	- change background
-	- resize the window
-	- erase element
+	- resize the window (maybe hard)
+	- selection
+		- erase selected element
+		- move
+		- transform / rotate
 
 - [ ] keyboard shortcuts
 	- cmd + s --> save
