@@ -1,17 +1,18 @@
-## rabiscopad
+## RabiscoPad
 
 A bare-bones SVG sketchpad - Licensed under GPL v3.0
 
-> Started by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. Farimani](https://twitter.com/fsfarimani)
+Developed by by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. Farimani](https://twitter.com/fsfarimani)
 
-[image1](docs/assets/readme_animation1.gif)
-[image2](docs/assets/readme_animation2.gif)
+![image1](docs/assets/readme_animation1.gif)
+![image2](docs/assets/readme_animation2.gif)
 
+## change log:
 
-    v2020_12_19 exporting SVG now!
-    v2020_12_20 line mode & circle mode
+- v2020_12_19 exporting SVG now!
+- v2020_12_20 line mode & circle mode
 
-TODO:
+## TODO:
 
 - [ ] GUI buttons
 	- [ ] pen colors 
