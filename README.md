@@ -4,10 +4,12 @@ A bare-bones SVG sketchpad - Licensed under GPL v3.0
 
 > Started by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. Farimani](https://twitter.com/fsfarimani)
 
-[image](docs/assets/readme_animation.gif)
+[image1](docs/assets/readme_animation1.gif)
+[image2](docs/assets/readme_animation2.gif)
 
-  v2020_12_19 exporting SVG now!
-  v2020_12_20 line mode & circle mode
+
+    v2020_12_19 exporting SVG now!
+    v2020_12_20 line mode & circle mode
 
 TODO:
 
