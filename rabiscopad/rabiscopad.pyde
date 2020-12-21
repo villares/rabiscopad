@@ -17,7 +17,7 @@ current_fill = None
 current_element = None
 background_c = color(240, 240, 200)
 
-SKETCH_MODE, LINE_MODE, CIRC_MODE, SELECT_MODE = range(4)
+SKETCH_MODE, LINE_MODE, CIRC_MODE, QUAD_MODE, TRI_MODE, SELECT_MODE = range(6)
 current_mode = SKETCH_MODE
 
 def setup():
@@ -57,11 +57,14 @@ def draw_elements():
         elif kind == CIRC_MODE and len(points) == 2:
             x, y = points[0]
             circle(x, y, 2 * dist(x, y, points[1][0], points[1][1]))
+        elif kind == QUAD_MODE and len(points) == 2:
+            x, y = points[0]
+            rect(x, y, (points[1][0] - x), (points[1][1] - y))
     
 def mousePressed():
     global current_element
 
-    # SKETCH_MODE, LINE_MODE, CIRC_MODE
+    # SKETCH_MODE, LINE_MODE, CIRC_MODE, QUAD_MODE, TRI_MODE
     points = [(mouseX, mouseY)]
     current_element = (current_mode,      # kind
                        current_stroke_w,  # stroke weight
@@ -81,7 +84,7 @@ def mouseDragged():
         if current_mode == SKETCH_MODE and good_dist(last_px, last_py):
             points.append((mouseX, mouseY))
         
-        if current_mode in (LINE_MODE, CIRC_MODE):
+        if current_mode in (LINE_MODE, CIRC_MODE, QUAD_MODE):
             if len(points) == 1:
                 points.append((mouseX, mouseY))
             else:
@@ -116,6 +119,8 @@ def keyPressed():
         current_mode = LINE_MODE
     if key == 'c':
         current_mode = CIRC_MODE
+    if key == 'q':
+        current_mode = QUAD_MODE
     if key == ' ':
         current_mode = SKETCH_MODE
 

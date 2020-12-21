@@ -40,6 +40,8 @@ Developed by by [Alexandre B A Villares](http://twitter.com/villares) and [Foad 
 	- polygon
 
 - [ ] snapping
+	- ruler
+	- 
 
 - [ ] features:
 	- import / export image
@@ -48,6 +50,8 @@ Developed by by [Alexandre B A Villares](http://twitter.com/villares) and [Foad 
 	- transform / rotate
 	- zoom and pan
 	- change background
+	- resize the window
+	- erase element
 
 - [ ] keyboard shortcuts
 	- cmd + s --> save
