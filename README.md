@@ -46,7 +46,7 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 - [ ] features:
 	- import image - maybe hard
 	- export raster image (PNG) - easy peasy
-	- import / open SVG (HARD)
+	- import / open SVG (hard if you want to edit things, easy otherwise)
 	- layers (maybe hard)
 	- zoom and pan (maybe hard...)
 	- change background
@@ -56,11 +56,11 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 		- move
 		- transform / rotate
 
-- [ ] keyboard shortcuts
+- [ ] two-key keyboard shortcuts (a bit of trouble)
 	- cmd + s --> save
-	- cmd + z --> undo
-	- cmd + r --> redo
-	- cmd + d --> duplicate selected / last drawn
+	- cmd + z --> undo VERY HARD FEATURE!!!!
+	- cmd + r --> redo (see above)
+	- cmd + d --> duplicate selected / last drawn 
 	- 
 
 
