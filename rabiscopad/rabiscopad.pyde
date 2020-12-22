@@ -7,6 +7,7 @@ in collaboration with Foad S. Farimani https://twitter.com/fsfarimani
 v2020_12_19 exporting SVG now!
 v2020_12_20 line mode & circle mode
 v2020_12_21a restructure in modules
+v2020_12_21b very crude buttons
 """
 
 import interface
