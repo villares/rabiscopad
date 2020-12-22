@@ -6,8 +6,8 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 
 ### How to run this?
 
-- You will need [to install Processing Python Mode](https://abav.lugaralgum.com/como-instalar-o-processing-modo-python/index-EN.html)
-- Clone this repository or just hit [download](https://github.com/villares/rabiscopad/archive/main.zip)
+- You will need [to install Processing Python Mode](https://abav.lugaralgum.com/como-instalar-o-processing-modo-python/index-EN.html);
+- Clone this repository or just hit [download](https://github.com/villares/rabiscopad/archive/main.zip);
 - Use the Processing IDE to open the `rabiscopad.pyde` file, mind it must be kept on its folder named `rabiscopad` with its `.py` modules.
 
 ### Keyboard shortcuts:
