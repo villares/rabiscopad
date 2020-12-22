@@ -18,13 +18,14 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 
 - v2020_12_19 exporting SVG now!
 - v2020_12_20 line mode & circle mode
+- v2020_12_21 first attempt at GUI Buttons
 
 ## TODO:
 
-- [ ] GUI buttons
-	- [ ] pen colors 
-        - [ ] weight and mode buttons
-- [ ] selection mode
+- [X] GUI buttons
+	- [/] pen colors 
+        - [ ] weight and mode 
+	
 - [ ] save SVG with timestamp on name
 	- [ ] save SVG to user selected file
 
@@ -51,7 +52,7 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 	- zoom and pan (maybe hard...)
 	- change background
 	- resize the window (maybe hard)
-	- selection
+	- [ ] selection mode
 		- erase selected element
 		- move
 		- transform / rotate
