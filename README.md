@@ -23,9 +23,9 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 ## TODO:
 
 - [X] GUI buttons (can be improved a lot)
-	- [X] pen colors (in progress!) 
-        - [ ] stroke weight
-	- [ ] drawing modes 
+    - [X] pen colors (in progress!) 
+    - [ ] stroke weight
+    - [ ] drawing modes 
 	
 - [ ] save SVG with timestamp on name
 	- [ ] save SVG to user selected file
