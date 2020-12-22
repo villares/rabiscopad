@@ -8,6 +8,8 @@ v2020_12_19 exporting SVG now!
 v2020_12_20 line mode & circle mode
 v2020_12_21a restructure in modules
 v2020_12_21b very crude buttons
+v2020_12_22 less crude buttons
+
 """
 
 import interface
@@ -45,3 +47,12 @@ def keyPressed():
 
 def keyReleased():
     interface.key_released(key, keyCode)
+    
+def mouseWheel(e): # not used yet, nothing implemented
+    interface.mouse_wheel(e)    
+    
+# def stop():
+#     r = interface.yes_no_pane("Closing!", "Would you like to save session?")
+#     if r == 0:
+#         # save_session()
+#         print("Sorry, save_session() not implemented!")
