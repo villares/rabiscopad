@@ -3,19 +3,23 @@
 B_RADIUS = 0
 
 class Button():
-    
+
     button_list = []
 
-    def __init__(self, x, y, w, h, txt, func):
+    def __init__(self, x, y, w, h,
+                 txt,
+                 func,
+                 txt_color=color(0)
+                 ):
         self.x, self.y = x, y
         self.w, self.h = w, h
         self.txt = txt
-        self.txt_color = color(0)
+        self.txt_color = txt_color
         self.pressed = False
         self.func = func
         self.active = False
-        self.active_on = color(200, 200, 240)
-        self.active_off = color(100)
+        self.active_off = color(200, 200, 240)
+        self.active_on = color(100)
         self.button_list.append(self)
 
     def mouse_over(self):
@@ -38,7 +42,7 @@ class Button():
         if self.check(mouse_over, mp):
             self.func(self)
         popStyle()
-                
+
     def check(self, mouse_over, mp):
         result = False
         if mouse_over and self.pressed and not mp:
@@ -48,15 +52,18 @@ class Button():
         else:
             self.pressed = False
         return result
-    
+
     def toggle(self):
         self.active = not self.active
-        
-    def exclusive_on(self):    
-        for b in self.button_list:
-            b.active = False
-        self.active = True
-   
+
+    def exclusive_on(self):
+        if self.active:
+            self.active = False
+        else:
+            for b in self.button_list:
+                b.active = False
+            self.active = True
+
     def calc_fill(self, mouse_over):
         if self.active and mouse_over:
             return self.darken_color(self.active_on)
@@ -66,14 +73,16 @@ class Button():
             return self.darken_color(self.active_off)
         else:
             return self.active_off
-     
-    @staticmethod       
+
+    @staticmethod
     def darken_color(c):
         r, g, b = red(c), green(c), blue(c)
-        return color(r / 2, g / 2, b / 2)        
+        return color(r / 2, g / 2, b / 2)
 
     @classmethod
     def display_all(cls, mp):
         for b in cls.button_list:
             b.display(mp)
-            
+
+class SColorButton(Button):
+    button_list = []

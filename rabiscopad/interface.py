@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from drawing import drawing_elements
-from buttons import Button
+from buttons import Button, SColorButton
 
 COLORS = {'BLACK': 0,
           'WHITE': 255,
@@ -51,7 +51,6 @@ def mouse_dragged(mb):
             else:
                 points[-1] = (mouseX, mouseY)
 
-
 def good_dist(last_px, last_py):
     return dist(mouseX, mouseY, last_px, last_py) > current_stroke_w
 
@@ -91,12 +90,21 @@ def treat_multi_keys():
     pass
 
 def setup_gui():
-    Button(50, height - 50, 50, 50,
-           txt='black',
-           func=color_setter(COLORS['BLACK']))
-    Button(100, height - 50, 50, 50,
-           txt='red',
-           func=color_setter(COLORS['RED']))
+    global s_menu_button
+    s_menu_button = Button(
+        0, height - 50, 50, 50,
+        txt='stroke\ncolor',
+        func=Button.toggle)
+
+    SColorButton(
+        50, height - 50, 50, 50,
+        txt='•',
+        func=color_setter(COLORS['BLACK']))
+    SColorButton(
+        100, height - 50, 50, 50,
+        txt='•',
+        txt_color=COLORS['RED'],
+        func=color_setter(COLORS['RED']))
 
 def color_setter(c):
     def setter(button):
@@ -111,12 +119,14 @@ def draw_gui(mp):
     Draw on-screen buttons 
     """
     Button.display_all(mp)
+    if s_menu_button.active:
+        SColorButton.display_all(mp)
 
 def mouse_wheel(e):
     pass
 
 def yes_no_pane(title, message):
-    # Sim é 0, Não é 1, fechar a janela é -1
+    # 0:Yes, 1:No,-1:Canceled/Closed
     from javax.swing import JOptionPane
     return JOptionPane.showConfirmDialog(None,
                                          message,
