@@ -12,7 +12,7 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 - <kbd>s</kbd> save SVG
 - <kbd>c</kbd> draw circle
 - <kbd>l</kbd> draw line
-- <kbd>Space</kbd> fre hand draw mode
+- <kbd>Space</kbd> free drawing mode
 
 ## change log:
 
@@ -60,7 +60,7 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 
 - [ ] two-key keyboard shortcuts (a bit of trouble)
 	- cmd + s --> save
-	- cmd + z --> undo VERY HARD FEATURE!!!!
+	- cmd + z --> undo (maybe hard, but I had some ideas...)
 	- cmd + r --> redo (see above)
 	- cmd + d --> duplicate selected / last drawn 
 	- 
