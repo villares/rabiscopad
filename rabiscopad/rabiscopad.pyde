@@ -17,7 +17,8 @@ add_library('svg')
 def setup():
     # fullScreen()  # to use this, diable size()
     size(500, 500)  # disable this to use fullScreen()
-
+    interface.setup_gui()
+    
 def draw():
     background(interface.background_c)
     drawing.draw_elements()
@@ -26,14 +27,14 @@ def draw():
         interface.export_svg = False
         endRecord()
 
-    interface.draw_gui()  # not implemented
+    interface.draw_gui(mousePressed)
     interface.treat_multi_keys() # not implemented
 
 def mousePressed():
     interface.mouse_pressed(mouseButton)
 
 def mouseReleased():
-    interface.mouse_released()
+    interface.mouse_released(mouseButton)
 
 def mouseDragged():
     interface.mouse_dragged(mouseButton)

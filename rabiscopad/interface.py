@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from drawing import drawing_elements
+from buttons import Button
 
 SKETCH_MODE, LINE_MODE, CIRC_MODE, SELECT_MODE = range(4)
 
@@ -24,7 +25,7 @@ def mouse_pressed(mb):
                        points)
     drawing_elements.append(current_element)
 
-def mouse_released():
+def mouse_released(mb):
     global current_element
     current_element = None
 
@@ -80,9 +81,26 @@ def treat_multi_keys():
     # this will be needed for multi-key shortcuts
     pass
 
-def draw_gui():
+def setup_gui():
+    Button(50, height-50, 50, 50,
+                txt="black",
+                func=black)
+    Button(100, height-50, 50, 50,
+                txt="red",
+                func=vermelho)
+
+def black():
+    global current_stroke_c
+    current_stroke_c = color(0)
+
+def vermelho():
+    global current_stroke_c
+    current_stroke_c = color(255, 0, 0)
+    
+def draw_gui(mp):
     """
     Draw on-screen buttons 
     """
     pushStyle()
+    Button.display_all(mp)
     popStyle()
