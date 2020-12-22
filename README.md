@@ -22,8 +22,8 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 
 ## TODO:
 
-- [X] GUI buttons
-	- [X] pen colors (in progress! 
+- [X] GUI buttons (can be improved a lot)
+	- [X] pen colors (in progress!) 
         - [ ] stroke weight
 	- [ ] drawing modes 
 	
