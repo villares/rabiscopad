@@ -24,16 +24,23 @@ background_c = color(240, 240, 200)
 
 def mouse_pressed(mb):
     global current_element
+    if not_on_button():
+        # SKETCH_MODE, LINE_MODE, CIRC_MODE
+        points = [(mouseX, mouseY)]
+        current_element = (current_mode,      # kind
+                        current_stroke_w,  # stroke weight
+                        current_stroke_c,  # stroke color
+                        current_fill,
+                        points)
+        drawing_elements.append(current_element)
 
-    # SKETCH_MODE, LINE_MODE, CIRC_MODE
-    points = [(mouseX, mouseY)]
-    current_element = (current_mode,      # kind
-                       current_stroke_w,  # stroke weight
-                       current_stroke_c,  # stroke color
-                       current_fill,
-                       points)
-    drawing_elements.append(current_element)
-
+def not_on_button():
+    if not s_menu_button.active:
+        return not s_menu_button.mouse_over()
+    else:
+        return mouseY < height - 50
+        
+            
 def mouse_released(mb):
     global current_element
     current_element = None
@@ -95,16 +102,19 @@ def setup_gui():
         0, height - 50, 50, 50,
         txt='stroke\ncolor',
         func=Button.toggle)
-
-    SColorButton(
-        50, height - 50, 50, 50,
-        txt='•',
-        func=color_setter(COLORS['BLACK']))
-    SColorButton(
-        100, height - 50, 50, 50,
-        txt='•',
-        txt_color=COLORS['RED'],
-        func=color_setter(COLORS['RED']))
+    x = 50
+    for c in COLORS:
+        SColorButton(
+            x, height - 50, 50, 50,
+            txt='•',
+            txt_color=COLORS[c],
+            func=color_setter(COLORS[c]))
+        x += 50
+    # SColorButton(
+    # 100, height - 50, 50, 50,
+    # txt='•',
+    # txt_color=COLORS['RED'],
+    # func=color_setter(COLORS['RED']))
 
 def color_setter(c):
     def setter(button):
