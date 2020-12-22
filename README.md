@@ -4,8 +4,11 @@ A bare-bones SVG sketchpad - Licensed under GPL v3.0
 
 Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. Farimani](https://twitter.com/fsfarimani)
 
-![image1](docs/assets/readme_animation1.gif)
-![image2](docs/assets/readme_animation2.gif)
+### How to run this?
+
+- You will need [to install Processing Python Mode](https://abav.lugaralgum.com/como-instalar-o-processing-modo-python/index-EN.html)
+- Clone this repository or just hit [download](https://github.com/villares/rabiscopad/archive/main.zip)
+- Use the Processing IDE to open the `rabiscopad.pyde` file, mind it must be kept on its folder named `rabiscopad` with its `.py` modules.
 
 ### Keyboard shortcuts:
 
@@ -25,7 +28,12 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 - v2020_12_21 first attempt at GUI Buttons
 - v2020_12_22 pe/stroke color buttons
 
-## TODO:
+![image1](docs/assets/readme_animation1.gif)
+![image2](docs/assets/readme_animation2.gif)
+
+---
+
+## TODO IDEAS:
 
 - [X] GUI buttons (can be improved a lot)
     - [X] stroke/pen colors
