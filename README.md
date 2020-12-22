@@ -76,10 +76,10 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 	- resize the window (maybe nasty)
 	
 - [ ] two-key keyboard shortcuts (a bit of trouble)
-	- `cmd/ctrl` + `s` --> save
-	- `cmd/ctrl` + `z` --> undo (maybe hard, but I had some ideas...)
-	- `cmd/ctrl` + `r` --> redo (see above)
-	- `cmd/ctrl` + `d` --> duplicate selected / last drawn 
+	- <kbd>cmd/ctrl + s</kbd> --> save
+	- <kbd>cmd/ctrl + z</kbd> --> undo (maybe hard, but I had some ideas...)
+	- <kbd>cmd/ctrl + r</kbd> --> redo (see above)
+	- <kbd>cmd/ctrl + d</kbd> --> duplicate selected / last drawn 
 	
 
 
