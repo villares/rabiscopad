@@ -12,7 +12,7 @@ COLORS = {'BLACK': 0,
           'GREEN': color(0, 200, 0),
           'BLUE': color(0, 0, 200),
           }
-SKETCH_MODE, LINE_MODE, CIRC_MODE, SELECT_MODE = range(4)
+SKETCH_MODE, LINE_MODE, CIRC_MODE, QUAD_MODE, TRI_MODE, SELECT_MODE = range(6)
 
 current_mode = SKETCH_MODE
 export_svg = False
@@ -28,10 +28,10 @@ def mouse_pressed(mb):
         # SKETCH_MODE, LINE_MODE, CIRC_MODE
         points = [(mouseX, mouseY)]
         current_element = (current_mode,      # kind
-                        current_stroke_w,  # stroke weight
-                        current_stroke_c,  # stroke color
-                        current_fill,
-                        points)
+                           current_stroke_w,  # stroke weight
+                           current_stroke_c,  # stroke color
+                           current_fill,
+                           points)
         drawing_elements.append(current_element)
 
 def not_on_button():
@@ -39,8 +39,8 @@ def not_on_button():
         return not s_menu_button.mouse_over()
     else:
         return mouseY < height - 50
-        
-            
+
+
 def mouse_released(mb):
     global current_element
     current_element = None
@@ -51,8 +51,7 @@ def mouse_dragged(mb):
         last_px, last_py = points[-1]
         if current_mode == SKETCH_MODE and good_dist(last_px, last_py):
             points.append((mouseX, mouseY))
-
-        if current_mode in (LINE_MODE, CIRC_MODE):
+        if current_mode in (LINE_MODE, CIRC_MODE, QUAD_MODE):
             if len(points) == 1:
                 points.append((mouseX, mouseY))
             else:
@@ -80,11 +79,12 @@ def key_pressed(key, keyCode):
         current_stroke_w += 1
     if key == '-' and current_stroke_w > 1:
         current_stroke_w -= 1
-
     if key == 'l':
         current_mode = LINE_MODE
     if key == 'c':
         current_mode = CIRC_MODE
+    if key == 'q':
+        current_mode = QUAD_MODE
     if key == ' ':
         current_mode = SKETCH_MODE
 

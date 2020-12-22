@@ -25,3 +25,6 @@ def draw_elements():
         elif kind == interface.CIRC_MODE and len(points) == 2:
             x, y = points[0]
             circle(x, y, 2 * dist(x, y, points[1][0], points[1][1]))
+        elif kind == interface.QUAD_MODE and len(points) == 2:
+            x, y = points[0]
+            rect(x, y, (points[1][0] - x), (points[1][1] - y))
