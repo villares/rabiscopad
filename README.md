@@ -6,7 +6,7 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 
 ### How to run this?
 
-- You will need [to install Processing Python Mode](https://abav.lugaralgum.com/como-instalar-o-processing-modo-python/index-EN.html);
+- You will need [to install Processing Python Mode](https://abav.lugaralgum.com/como-instalar-o-processing-modo-python/index-EN.html)— we might provide self-contained "builds" for Linux, MacOS & Windows one day (you cold volunteer to mantain them!);
 - Clone this repository or just hit [download](https://github.com/villares/rabiscopad/archive/main.zip);
 - Use the Processing IDE to open the `rabiscopad.pyde` file, mind it must be kept on its folder named `rabiscopad` with its `.py` modules.
 
@@ -76,10 +76,10 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 	- resize the window (maybe nasty)
 	
 - [ ] two-key keyboard shortcuts (a bit of trouble)
-	- cmd + s --> save
-	- cmd + z --> undo (maybe hard, but I had some ideas...)
-	- cmd + r --> redo (see above)
-	- cmd + d --> duplicate selected / last drawn 
+	- `cmd/ctrl` + `s` --> save
+	- `cmd/ctrl` + `z` --> undo (maybe hard, but I had some ideas...)
+	- `cmd/ctrl` + `r` --> redo (see above)
+	- `cmd/ctrl` + `d` --> duplicate selected / last drawn 
 	
 
 
