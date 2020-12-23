@@ -83,7 +83,7 @@ class Button():
     @staticmethod
     def darken_color(c):
         r, g, b = red(c), green(c), blue(c)
-        return color(r / 2, g / 2, b / 2)
+        return color(r * 0.66, g * 0.66, b * 0.66)
 
     @classmethod
     def display_all(cls, mp):
