@@ -3,16 +3,24 @@ from __future__ import unicode_literals
 from drawing import drawing_elements
 from buttons import Button, SColorButton
 
-COLORS = {'BLACK': 0,
-          'WHITE': 255,
-          'LIGHT_GREY': 240,
-          'DARK_GREY': 50,
-          'MIDDLE_GREY': 128,
-          'RED': color(200, 0, 0),
-          'GREEN': color(0, 200, 0),
-          'BLUE': color(0, 0, 200),
-          }
-SKETCH_MODE, LINE_MODE, CIRC_MODE, QUAD_MODE, TRI_MODE, SELECT_MODE = range(6)
+(SKETCH_MODE,
+ LINE_MODE,
+ CIRC_MODE,
+ QUAD_MODE,
+ TRI_MODE,
+ SELECT_MODE
+ ) = range(6)
+
+COLORS = [
+    0,  # black
+    50,  # dark grey
+    128,  # middle grey
+    220,  # light grey
+    255,  # white
+    color(200, 0, 0), # red
+    color(0, 200, 0), # green
+    color(0, 0, 200), # blue
+]
 
 current_mode = SKETCH_MODE
 export_svg = False
@@ -27,11 +35,13 @@ def mouse_pressed(mb):
     if not_on_button():
         # SKETCH_MODE, LINE_MODE, CIRC_MODE
         points = [(mouseX, mouseY)]
-        current_element = (current_mode,      # kind
-                           current_stroke_w,  # stroke weight
-                           current_stroke_c,  # stroke color
-                           current_fill,
-                           points)
+        current_element = (
+            current_mode,      # kind
+            current_stroke_w,  # stroke weight
+            current_stroke_c,  # stroke color
+            current_fill,
+            points
+        )
         drawing_elements.append(current_element)
 
 def not_on_button():
@@ -39,7 +49,6 @@ def not_on_button():
         return not s_menu_button.mouse_over()
     else:
         return mouseY < height - 50
-
 
 def mouse_released(mb):
     global current_element
@@ -51,7 +60,9 @@ def mouse_dragged(mb):
         last_px, last_py = points[-1]
         if current_mode == SKETCH_MODE and good_dist(last_px, last_py):
             points.append((mouseX, mouseY))
-        if current_mode in (LINE_MODE, CIRC_MODE, QUAD_MODE):
+        if current_mode in (LINE_MODE,
+                            CIRC_MODE,
+                            QUAD_MODE):
             if len(points) == 1:
                 points.append((mouseX, mouseY))
             else:
@@ -104,17 +115,14 @@ def setup_gui():
         func=Button.toggle)
     x = 50
     for c in COLORS:
-        SColorButton(
+        b = SColorButton(
             x, height - 50, 50, 50,
             txt='•',
-            txt_color=COLORS[c],
-            func=color_setter(COLORS[c]))
+            txt_color=c,
+            func=color_setter(c))
+        if c == 0:
+            b.active = True
         x += 50
-    # SColorButton(
-    # 100, height - 50, 50, 50,
-    # txt='•',
-    # txt_color=COLORS['RED'],
-    # func=color_setter(COLORS['RED']))
 
 def color_setter(c):
     def setter(button):
@@ -122,7 +130,6 @@ def color_setter(c):
         button.exclusive_on()
         current_stroke_c = c
     return setter
-
 
 def draw_gui(mp):
     """

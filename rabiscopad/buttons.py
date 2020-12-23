@@ -9,7 +9,8 @@ class Button():
     def __init__(self, x, y, w, h,
                  txt,
                  func,
-                 txt_color=color(0)
+                 txt_color=color(0),
+                 fill_color=None,
                  ):
         self.x, self.y = x, y
         self.w, self.h = w, h
@@ -18,8 +19,8 @@ class Button():
         self.pressed = False
         self.func = func
         self.active = False
-        self.active_off = color(200, 200, 240)
-        self.active_on = color(100)
+        self.fill_color = fill_color or color(200, 200, 240)
+        self.fill_color_active = self.darken_color(self.fill_color)
         self.button_list.append(self)
 
     def mouse_over(self):
@@ -56,7 +57,12 @@ class Button():
     def toggle(self):
         self.active = not self.active
 
-    def exclusive_on(self):
+    def exclusive_on(self):  # no toggle
+        for b in self.button_list:
+            b.active = False
+        self.active = True
+
+    def exclusive_on_and_toggle(self):
         if self.active:
             self.active = False
         else:
@@ -66,13 +72,13 @@ class Button():
 
     def calc_fill(self, mouse_over):
         if self.active and mouse_over:
-            return self.darken_color(self.active_on)
+            return self.darken_color(self.fill_color_active)
         elif self.active:
-            return self.active_on
+            return self.fill_color_active
         elif mouse_over:
-            return self.darken_color(self.active_off)
+            return self.darken_color(self.fill_color)
         else:
-            return self.active_off
+            return self.fill_color
 
     @staticmethod
     def darken_color(c):
