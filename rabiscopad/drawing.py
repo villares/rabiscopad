@@ -5,6 +5,24 @@ import interface
 drawing_elements = []
 
 def draw_elements():
+    # highlight selected object
+    for i, element in enumerate(drawing_elements):
+        if i == interface.current_selection:
+            strokeWeight(5 + interface.current_stroke_w)
+            stroke(255, 100, 100)
+            for x, y in element[-1]:
+                point(x, y)
+    # mouse over on selection mode
+    if interface.current_mode == interface.SELECT_MODE:
+        for i, element in enumerate(drawing_elements):
+            strokeWeight(5 + interface.current_stroke_w)
+            stroke(255, 100, 255)
+            if i != interface.current_selection:
+                for x, y in element[-1]:
+                    if dist(x, y, mouseX, mouseY) < 5:
+                        for x, y in element[-1]:
+                            point(x, y)
+
     for element in drawing_elements:
         kind, sw, sc, cf, points = element
         strokeWeight(sw)
@@ -13,7 +31,7 @@ def draw_elements():
             fill(cf)
         else:
             noFill()
-            
+
         if kind in (interface.SKETCH_MODE, interface.LINE_MODE):
             beginShape()
             for p in points:
