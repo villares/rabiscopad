@@ -151,6 +151,8 @@ def key_pressed(key, keyCode):
         current_mode = SKETCH_MODE
     if key == 'x':
         current_mode = SELECT_MODE
+    if str(key) in "01234567":   # without str() you crash when key is an int code!
+        current_stroke_c = COLORS[int(key)]
 
 
 def key_released(key, keyCode):
