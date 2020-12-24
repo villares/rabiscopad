@@ -13,11 +13,12 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 ### Keyboard shortcuts:
 
 - <kbd>s</kbd> save SVG
-- <kbd>c</kbd> draw circle
-- <kbd>l</kbd> draw line
-- <kbd>q</kbd> draw quad/rectangle
+- <kbd>c</kbd> draw circle mode
+- <kbd>l</kbd> draw line mode
+- <kbd>q</kbd> draw quad/rectangle mode
 - <kbd>space</kbd> free drawing mode
-- <kbd>backspace</kbd> or <kbd>delete</kbd> erase last element
+- <kbd>x</kbd> selection mode
+- <kbd>backspace</kbd> or <kbd>delete</kbd> erase last element or selected element
 - <kbd>r</kbd> erase all
 - <kbd>+</kbd> and <kbd>-</kbd> change stroke weight
 
