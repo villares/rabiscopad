@@ -7,7 +7,7 @@ drawing_elements = []
 def draw_elements():
     # highlight selected object
     for i, element in enumerate(drawing_elements):
-        if i == interface.current_selection:
+        if i in interface.current_selection:
             strokeWeight(5 + interface.current_stroke_w)
             stroke(255, 100, 100)
             for x, y in element[-1]:
@@ -17,7 +17,7 @@ def draw_elements():
         for i, element in enumerate(drawing_elements):
             strokeWeight(5 + interface.current_stroke_w)
             stroke(255, 100, 255)
-            if i != interface.current_selection:
+            if i not in interface.current_selection:
                 for x, y in element[-1]:
                     if dist(x, y, mouseX, mouseY) < 5:
                         for x, y in element[-1]:

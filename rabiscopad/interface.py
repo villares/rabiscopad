@@ -29,7 +29,7 @@ current_stroke_w = 2
 current_stroke_c = color(0)
 current_fill = None
 current_element = None
-current_selection = None
+current_selection = []
 background_c = color(240, 240, 200)
 keys_down = set()
 
@@ -49,7 +49,7 @@ def setup_gui():
         if c == 0:
             b.active = True
         x += 50
-        
+
     x = 100
     for m in MODES:
         b = ModeButton(
@@ -73,7 +73,7 @@ def draw_gui(mp):
     else:
         ModeButton.display_all(mp)
     if current_mode != SELECT_MODE:
-        current_selection = None
+        current_selection = []
 
 def color_setter(c):
     def setter(button):
@@ -112,12 +112,20 @@ def mouse_pressed(mb):
             points = element[-1]
             for j, pt in enumerate(points):
                 if dist(mouseX, mouseY, pt[0], pt[1]) < 5:
-                    current_selection = i
+
+                    if SHIFT not in keys_down:
+                        current_selection = [i]
+                    else:
+                        if i not in current_selection:
+                            current_selection.append(i)
+                        else:
+                            current_selection.remove(i)
                     return
-        current_selection = None
+        if SHIFT not in keys_down:
+            current_selection = []
 
 def not_on_button():
-        return mouseY < height - 50
+    return mouseY < height - 50
 
 def mouse_dragged(mb):
     if current_element:
@@ -125,13 +133,23 @@ def mouse_dragged(mb):
         last_px, last_py = points[-1]
         if current_mode == SKETCH_MODE and good_dist(last_px, last_py):
             points.append((mouseX, mouseY))
-        if current_mode in (LINE_MODE,
+        elif current_mode in (LINE_MODE,
                             CIRC_MODE,
                             QUAD_MODE):
             if len(points) == 1:
                 points.append((mouseX, mouseY))
             else:
                 points[-1] = (mouseX, mouseY)
+    if current_mode == SELECT_MODE:
+            for i in current_selection:
+                element = drawing_elements[i]
+                dx, dy = mouseX - pmouseX, mouseY - pmouseY
+                move_points(element[-1], dx, dy) 
+
+def move_points(pts, dx, dy):
+    for i, (x, y) in enumerate(pts):
+        pts[i] = (x + dx, y + dy)
+
 
 def good_dist(last_px, last_py):
     return dist(mouseX, mouseY, last_px, last_py) > current_stroke_w
@@ -142,7 +160,7 @@ def key_pressed(key, keyCode):
         keys_down.add(keyCode)
     else:
         keys_down.add(key)
-    
+
     global export_svg
     global current_stroke_w, current_stroke_c
     global current_fill, background_c
@@ -151,9 +169,12 @@ def key_pressed(key, keyCode):
     if key in (BACKSPACE, DELETE) and drawing_elements:
         if current_mode != SELECT_MODE:
             drawing_elements.pop()
-        elif current_selection is not None:
-            drawing_elements.pop(current_selection)
-            current_selection = None
+        elif current_selection:
+            to_del = [drawing_elements[i]
+                      for i in current_selection]
+            for el in to_del:
+                drawing_elements.remove(el)
+            current_selection = []
 
     if key == 'r':  # Reset
         drawing_elements[:] = []
@@ -175,7 +196,8 @@ def key_pressed(key, keyCode):
         current_mode = SKETCH_MODE
     if key == 'x':
         current_mode = SELECT_MODE
-    if str(key) in "01234567":   # without str() you crash when key is an int code!
+    # without str() you crash when key is an int code!
+    if str(key) in "01234567":
         current_stroke_c = COLORS[int(key)]
 
 
