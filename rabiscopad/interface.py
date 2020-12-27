@@ -72,6 +72,7 @@ def draw_gui(mp):
         SColorButton.display_all(mp)
     else:
         ModeButton.display_all(mp)
+        
     if current_mode != SELECT_MODE:
         current_selection = []
 

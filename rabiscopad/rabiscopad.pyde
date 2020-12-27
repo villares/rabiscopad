@@ -10,6 +10,8 @@ v2020_12_21a restructure in modules
 v2020_12_21b very crude buttons
 v2020_12_22 less crude buttons
 v2020_12_24 crude attempt at selection mode
+v2020_12_27 mode buttons, multiple key detection (to get SHIFT)
+            multiple selection (with SHIFT), moving selected
 """
 
 import interface
