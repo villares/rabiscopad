@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from drawing import drawing_elements
-from buttons import Button, SColorButton
+from buttons import Button, SColorButton, ModeButton
 
-(SKETCH_MODE,
- LINE_MODE,
- CIRC_MODE,
- QUAD_MODE,
- TRI_MODE,
- SELECT_MODE
- ) = range(6)
+SKETCH_MODE = 'sketch'
+LINE_MODE = 'line'
+CIRC_MODE = 'circ'
+QUAD_MODE = 'rect'
+POLY_MODE = 'triang'
+SELECT_MODE = 'select'
+MODES = (SKETCH_MODE, LINE_MODE, CIRC_MODE,
+         QUAD_MODE, POLY_MODE, SELECT_MODE)
 
 COLORS = [
     0,  # black
@@ -30,6 +31,7 @@ current_fill = None
 current_element = None
 current_selection = None
 background_c = color(240, 240, 200)
+keys_down = set()
 
 def setup_gui():
     global s_menu_button
@@ -47,6 +49,18 @@ def setup_gui():
         if c == 0:
             b.active = True
         x += 50
+        
+    x = 100
+    for m in MODES:
+        b = ModeButton(
+            x, height - 50, 50, 50,
+            txt=m,
+            txt_color=0,
+            func=mode_setter(m))
+        if m == SKETCH_MODE:
+            b.active = True
+        x += 50
+
 
 def draw_gui(mp):
     """
@@ -56,6 +70,8 @@ def draw_gui(mp):
     Button.display_all(mp)
     if s_menu_button.active:
         SColorButton.display_all(mp)
+    else:
+        ModeButton.display_all(mp)
     if current_mode != SELECT_MODE:
         current_selection = None
 
@@ -64,6 +80,13 @@ def color_setter(c):
         global current_stroke_c
         button.exclusive_on()
         current_stroke_c = c
+    return setter
+
+def mode_setter(m):
+    def setter(button):
+        global current_mode
+        button.exclusive_on()
+        current_mode = m
     return setter
 
 def mouse_released(mb):
@@ -94,11 +117,7 @@ def mouse_pressed(mb):
         current_selection = None
 
 def not_on_button():
-    if not s_menu_button.active:
-        return not s_menu_button.mouse_over()
-    else:
         return mouseY < height - 50
-
 
 def mouse_dragged(mb):
     if current_element:
@@ -119,6 +138,11 @@ def good_dist(last_px, last_py):
 
 
 def key_pressed(key, keyCode):
+    if key == CODED:
+        keys_down.add(keyCode)
+    else:
+        keys_down.add(key)
+    
     global export_svg
     global current_stroke_w, current_stroke_c
     global current_fill, background_c
@@ -156,8 +180,10 @@ def key_pressed(key, keyCode):
 
 
 def key_released(key, keyCode):
-    # this will be needed for multi-key shortcuts
-    pass
+    if key == CODED:
+        keys_down.discard(keyCode)
+    else:
+        keys_down.discard(key)
 
 def treat_multi_keys():
     # this will be needed for multi-key shortcuts

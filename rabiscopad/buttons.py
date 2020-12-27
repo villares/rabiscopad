@@ -5,6 +5,7 @@ B_RADIUS = 0
 class Button():
 
     button_list = []
+    display_on = True
 
     def __init__(self, x, y, w, h,
                  txt,
@@ -87,8 +88,12 @@ class Button():
 
     @classmethod
     def display_all(cls, mp):
-        for b in cls.button_list:
-            b.display(mp)
+        if cls.display_on:
+            for b in cls.button_list:
+                b.display(mp)
 
 class SColorButton(Button):
+    button_list = []
+                
+class ModeButton(Button):
     button_list = []
