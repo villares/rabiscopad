@@ -94,10 +94,15 @@ class Button():
 
 class SColorButton(Button):
     button_list = []
+
+    @classmethod
+    def set_active(cls, c):
+         for b in cls.button_list:
+                if b.txt_color == c:
+                    b.exclusive_on()                                
                 
 class ModeButton(Button):
     button_list = []
-    
     
     @classmethod
     def set_active(cls, m):

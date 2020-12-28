@@ -68,6 +68,7 @@ def draw_gui(mp):
     """
     global current_selection
     Button.display_all(mp)
+    s_menu_button.txt_color = current_stroke_c
     if s_menu_button.active:
         SColorButton.display_all(mp)
     else:
@@ -190,6 +191,7 @@ def key_pressed(key, keyCode):
     # without str() you crash when key is an int code!
     if str(key) in "01234567":
         current_stroke_c = COLORS[int(key)]
+        SColorButton.set_active(current_stroke_c)
 
     # treat keyboard shortcuts for modes
     for m in MODES:
@@ -197,8 +199,7 @@ def key_pressed(key, keyCode):
         if key == k:
             current_mode = m
             # and set gui button according!
-            ModeButton.set_active(m)
-            
+            ModeButton.set_active(current_mode)
 
 def key_released(key, keyCode):
     if key == CODED:
