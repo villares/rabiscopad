@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 from drawing import drawing_elements
 from buttons import Button, SColorButton, ModeButton
 
-SKETCH_MODE = 'sketch'
-LINE_MODE = 'line'
-CIRC_MODE = 'circ'
-QUAD_MODE = 'rect'
-POLY_MODE = 'triang'
-SELECT_MODE = 'select'
+SKETCH_MODE = ('sketch', ' ')
+LINE_MODE = ('line', 'l')
+CIRC_MODE = ('circ', 'c')
+QUAD_MODE = ('rect', 'q')
+POLY_MODE = ('poly', 'p') # not implemented
+SELECT_MODE = ('select', 'x')
 MODES = (SKETCH_MODE, LINE_MODE, CIRC_MODE,
          QUAD_MODE, POLY_MODE, SELECT_MODE)
 
@@ -54,7 +54,7 @@ def setup_gui():
     for m in MODES:
         b = ModeButton(
             x, height - 50, 50, 50,
-            txt=m,
+            txt=m[0],
             txt_color=0,
             func=mode_setter(m))
         if m == SKETCH_MODE:
@@ -187,20 +187,18 @@ def key_pressed(key, keyCode):
         current_stroke_w += 1
     if key == '-' and current_stroke_w > 1:
         current_stroke_w -= 1
-    if key == 'l':
-        current_mode = LINE_MODE
-    if key == 'c':
-        current_mode = CIRC_MODE
-    if key == 'q':
-        current_mode = QUAD_MODE
-    if key == ' ':
-        current_mode = SKETCH_MODE
-    if key == 'x':
-        current_mode = SELECT_MODE
     # without str() you crash when key is an int code!
     if str(key) in "01234567":
         current_stroke_c = COLORS[int(key)]
 
+    # treat keyboard shortcuts for modes
+    for m in MODES:
+        t, k = m
+        if key == k:
+            current_mode = m
+            # and set gui button according!
+            ModeButton.set_active(m)
+            
 
 def key_released(key, keyCode):
     if key == CODED:
