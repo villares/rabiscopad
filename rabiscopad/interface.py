@@ -7,7 +7,7 @@ SKETCH_MODE = ('sketch', ' ')
 LINE_MODE = ('line', 'l')
 CIRC_MODE = ('circ', 'c')
 QUAD_MODE = ('rect', 'q')
-POLY_MODE = ('poly', 'p') # not implemented
+POLY_MODE = ('poly', 'p')  # not implemented
 SELECT_MODE = ('select', 'x')
 MODES = (SKETCH_MODE, LINE_MODE, CIRC_MODE,
          QUAD_MODE, POLY_MODE, SELECT_MODE)
@@ -73,7 +73,7 @@ def draw_gui(mp):
         SColorButton.display_all(mp)
     else:
         ModeButton.display_all(mp)
-        
+
     if current_mode != SELECT_MODE:
         current_selection = []
 
@@ -136,17 +136,18 @@ def mouse_dragged(mb):
         if current_mode == SKETCH_MODE and good_dist(last_px, last_py):
             points.append((mouseX, mouseY))
         elif current_mode in (LINE_MODE,
-                            CIRC_MODE,
-                            QUAD_MODE):
+                              CIRC_MODE,
+                              QUAD_MODE):
             if len(points) == 1:
                 points.append((mouseX, mouseY))
             else:
                 points[-1] = (mouseX, mouseY)
     if current_mode == SELECT_MODE:
-            for i in current_selection:
-                element = drawing_elements[i]
-                dx, dy = mouseX - pmouseX, mouseY - pmouseY
-                move_points(element[-1], dx, dy) 
+        for i in current_selection:
+            element = drawing_elements[i]
+            points = element[-1]
+            dx, dy = mouseX - pmouseX, mouseY - pmouseY
+            move_points(points, dx, dy)
 
 def move_points(pts, dx, dy):
     for i, (x, y) in enumerate(pts):
@@ -195,7 +196,7 @@ def key_pressed(key, keyCode):
 
     # treat keyboard shortcuts for modes
     for m in MODES:
-        t, k = m
+        t, k = m  # button text, shortcut key
         if key == k:
             current_mode = m
             # and set gui button according!
