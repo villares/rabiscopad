@@ -50,7 +50,7 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 - [X] GUI buttons (can be improved a lot)
     - [X] stroke/pen colors
     - [ ] stroke weight
-    - [ ] drawing modes 
+    - [X] drawing modes 
 	
 - [ ] save SVG with timestamp on name
 	- [ ] save SVG to user selected file
@@ -65,12 +65,12 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 	- [X] line
 	- [X] circle
 	- [X] "quad"/rectangle
-	- [ ] triangle
+	- [ ] triangle / regular polygon ?
 	- [ ] polygon
-	- [ ] select/edit mode
+	- [X] select/edit mode
 		- erase selected element
-		- move
-		- transform (**could be with the scroll wheel!**)
+		- drag mouse to move them
+		- transform (**with the scroll wheel!**)
 		   - rotate
 		   - scale
 
