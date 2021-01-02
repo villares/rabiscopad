@@ -22,12 +22,23 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 - <kbd>r</kbd> erase all
 - <kbd>+</kbd> and <kbd>-</kbd> change stroke weight
 
-## change log:
+## Mouse Wheel
+
+- Use the mouse wheel to rotate selected elements (when in selection mode)
+- Hold <kbd>SHIFT</kbd> to scale instead
+- Hold <kbd>CONTROL</kbd> to make the mouse the center of rotation/scaling
+
+## Change log:
 
 - v2020_12_19 exporting SVG now!
 - v2020_12_20 line mode & circle mode
 - v2020_12_21 first attempt at GUI Buttons
 - v2020_12_22 pe/stroke color buttons
+- v2020_12_24 first crude attempt at selection mode
+- v2020_12_27 mode buttons, multiple key detection (to get SHIFT)
+	multiple selection (with SHIFT), moving selected objects with mouse drag
+- v2021_01_02 Rotate selected objects with mouse wheel SHIFT will scale,
+	CONTROL to change center of rotation/scaling
 
 ![image1](docs/assets/readme_animation1.gif)
 ![image2](docs/assets/readme_animation2.gif)
