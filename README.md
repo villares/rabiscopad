@@ -13,7 +13,7 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 ### How to contribute?
 
   [TODO: We need better instructions]
-  - Start by opening a conversation in an issue, after some talk, we probably love to have your PRs too!
+  - Start by opening a conversation in an issue, after some talk, we will probably love to have your PRs too!
 
 ---
 
