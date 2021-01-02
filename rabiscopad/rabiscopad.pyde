@@ -50,7 +50,7 @@ def keyPressed():
 def keyReleased():
     interface.key_released(key, keyCode)
     
-def mouseWheel(e): # not used yet, nothing implemented
+def mouseWheel(e): 
     interface.mouse_wheel(e)    
     
 # def stop():

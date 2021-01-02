@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from itertools import chain
 from drawing import drawing_elements
 from buttons import Button, SColorButton, ModeButton
 
@@ -108,7 +109,7 @@ def mouse_pressed(mb):
             points
         )
         drawing_elements.append(current_element)
-    elif not_on_button():
+    elif not_on_button():  # current_mode == SELECT_MODE
         for i, element in reversed(list(enumerate(drawing_elements))):
             # will have to check differently for circles...
             points = element[-1]
@@ -180,7 +181,8 @@ def key_pressed(key, keyCode):
             current_selection = []
 
     if key == 'r':  # Reset
-        drawing_elements[:] = []
+        if yes_no_pane("ATENTION", "Reset, erase all elements?") == 0:
+            drawing_elements[:] = []
     if key == 's':
         export_svg = True
         svg = createGraphics(width, height, SVG, 'sketch.svg')
@@ -213,8 +215,37 @@ def treat_multi_keys():
     pass
 
 
-def mouse_wheel(e):
-    pass
+def mouse_wheel(event):
+    a = event.getCount()
+    # Rotate all points of selected elements
+    if current_selection:
+        if CONTROL in keys_down:
+            rot_center = (mouseX, mouseY) 
+        else:
+            # bb = bounding_box(drawing_elements[-1][-1])
+            points = (drawing_elements[i][-1] for i in current_selection)
+            bb = bounding_box(chain(*points))
+            rot_center = midpoint(bb)        
+        for i in current_selection:
+                element = drawing_elements[i]
+                points = element[-1]
+                rotate_points(points, a / 10.0, rot_center)    
+                
+def rotate_points(pts, angle, origin):
+    x0, y0 = origin
+    for i, (xp, yp) in enumerate(pts):
+            x, y = xp - x0, yp - y0  # translate to origin
+            xr = x * cos(angle) - y * sin(angle)
+            yr = y * cos(angle) + x * sin(angle)        
+            pts[i] = (xr + x0, yr + y0)
+
+def bounding_box(points):
+    x_coordinates, y_coordinates = zip(*points)
+    return (PVector(min(x_coordinates), min(y_coordinates)),
+                PVector(max(x_coordinates), max(y_coordinates)))
+
+def midpoint(t):
+    return ((t[0][0] + t[1][0]) / 2.0, (t[0][1] + t[1][1]) / 2.0)
 
 def yes_no_pane(title, message):
     # 0:Yes, 1:No,-1:Canceled/Closed
