@@ -6,9 +6,18 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 
 ### How to run this?
 
-- You will need [to install Processing Python Mode](https://abav.lugaralgum.com/como-instalar-o-processing-modo-python/index-EN.html)— we might provide self-contained "builds" for Linux, MacOS & Windows one day (you cold volunteer to mantain them!);
+- You will need [to install Processing Python Mode](https://abav.lugaralgum.com/como-instalar-o-processing-modo-python/index-EN.html)— we might provide self-contained "builds" for Linux, MacOS & Windows one day (you could volunteer to mantain them!);
 - Clone this repository or just hit [download](https://github.com/villares/rabiscopad/archive/main.zip);
 - Use the Processing IDE to open the `rabiscopad.pyde` file, mind it must be kept on its folder named `rabiscopad` with its `.py` modules.
+
+### How to contribute?
+
+  [TODO: We need better instructions]
+  - Start by opening a conversation in an issue, after some talk, we probably love to have your PRs too!
+
+---
+
+## Some documentation
 
 ### Keyboard shortcuts:
 
@@ -22,13 +31,13 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 - <kbd>r</kbd> erase all
 - <kbd>+</kbd> and <kbd>-</kbd> change stroke weight
 
-## Mouse Wheel
+### Mouse Wheel
 
 - Use the mouse wheel to rotate selected elements (when in selection mode)
 - Hold <kbd>SHIFT</kbd> to scale instead
 - Hold <kbd>CONTROL</kbd> to make the mouse the center of rotation/scaling
 
-## Change log:
+### Change log
 
 - v2020_12_19 exporting SVG now!
 - v2020_12_20 line mode & circle mode
