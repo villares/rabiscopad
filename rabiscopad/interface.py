@@ -138,11 +138,14 @@ def mouse_dragged(mb):
             points.append((mouseX, mouseY))
         elif current_mode in (LINE_MODE,
                               CIRC_MODE,
-                              QUAD_MODE):
-            if len(points) == 1:
-                points.append((mouseX, mouseY))
-            else:
-                points[-1] = (mouseX, mouseY)
+                              ):
+            x0, y0 = points[0]
+            points[:] = (x0, y0), (mouseX, mouseY)
+        elif current_mode == QUAD_MODE:
+            x0, y0 = points[0]
+            points[:] = ((x0, y0), (mouseX, y0),
+                         (mouseX, mouseY), (x0, mouseY))
+
     if current_mode == SELECT_MODE:
         for i in current_selection:
             element = drawing_elements[i]
@@ -220,29 +223,29 @@ def mouse_wheel(event):
     # Rotate all points of selected elements
     if current_selection:
         if CONTROL in keys_down:
-            rot_center = (mouseX, mouseY) 
+            rot_center = (mouseX, mouseY)
         else:
             # bb = bounding_box(drawing_elements[-1][-1])
             points = (drawing_elements[i][-1] for i in current_selection)
             bb = bounding_box(chain(*points))
-            rot_center = midpoint(bb)        
+            rot_center = midpoint(bb)
         for i in current_selection:
-                element = drawing_elements[i]
-                points = element[-1]
-                rotate_points(points, a / 10.0, rot_center)    
-                
+            element = drawing_elements[i]
+            points = element[-1]
+            rotate_points(points, a / 10.0, rot_center)
+
 def rotate_points(pts, angle, origin):
     x0, y0 = origin
     for i, (xp, yp) in enumerate(pts):
-            x, y = xp - x0, yp - y0  # translate to origin
-            xr = x * cos(angle) - y * sin(angle)
-            yr = y * cos(angle) + x * sin(angle)        
-            pts[i] = (xr + x0, yr + y0)
+        x, y = xp - x0, yp - y0  # translate to origin
+        xr = x * cos(angle) - y * sin(angle)
+        yr = y * cos(angle) + x * sin(angle)
+        pts[i] = (xr + x0, yr + y0)
 
 def bounding_box(points):
     x_coordinates, y_coordinates = zip(*points)
     return (PVector(min(x_coordinates), min(y_coordinates)),
-                PVector(max(x_coordinates), max(y_coordinates)))
+            PVector(max(x_coordinates), max(y_coordinates)))
 
 def midpoint(t):
     return ((t[0][0] + t[1][0]) / 2.0, (t[0][1] + t[1][1]) / 2.0)

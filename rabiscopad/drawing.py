@@ -32,17 +32,15 @@ def draw_elements():
         else:
             noFill()
 
-        if kind in (interface.SKETCH_MODE, interface.LINE_MODE):
+        if kind == interface.CIRC_MODE and len(points) == 2:
+            x, y = points[0]
+            circle(x, y, 2 * dist(x, y, points[1][0], points[1][1]))
+        else:
+            # interface.SKETCH_MODE LINE_MODE QUAD_MODE
             beginShape()
             for p in points:
                 vertex(p[0], p[1])
-            if not cf:
-                endShape()
-            else:
+            if cf or kind == interface.QUAD_MODE:
                 endShape(CLOSE)
-        elif kind == interface.CIRC_MODE and len(points) == 2:
-            x, y = points[0]
-            circle(x, y, 2 * dist(x, y, points[1][0], points[1][1]))
-        elif kind == interface.QUAD_MODE and len(points) == 2:
-            x, y = points[0]
-            rect(x, y, (points[1][0] - x), (points[1][1] - y))
+            else:
+                endShape()

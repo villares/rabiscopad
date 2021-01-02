@@ -12,6 +12,7 @@ v2020_12_22 less crude buttons
 v2020_12_24 crude attempt at selection mode
 v2020_12_27 mode buttons, multiple key detection (to get SHIFT)
             multiple selection (with SHIFT), moving selected
+v2021_01_02 Rotate with mouse wheel, CONTROL to change center of rotation
 """
 
 import interface
