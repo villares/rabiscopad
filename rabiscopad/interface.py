@@ -15,6 +15,7 @@ SELECT_MODE = ('select', 'x')
 MODES = (SKETCH_MODE, LINE_MODE, CIRC_MODE,
          QUAD_MODE, POLY_MODE, SELECT_MODE)
 
+STROKE_COLOR_SHORTCUTS = "01234567"
 COLORS = [             # The main color palette:
     0,                 # black
     50,                # dark grey
@@ -208,7 +209,7 @@ def key_pressed(key, keyCode):
     if key == '-' and current_stroke_w > 1:
         current_stroke_w -= 1
     # without str() you crash when key is an int code!
-    if str(key) in "01234567":
+    if str(key) in STROKE_COLOR_SHORTCUTS:
         current_stroke_c = COLORS[int(key)]
         SColorButton.set_active(current_stroke_c)
 
