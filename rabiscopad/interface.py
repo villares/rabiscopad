@@ -27,7 +27,7 @@ COLORS = [             # The main color palette:
     color(0, 0, 200),  # blue
 ]
 
-SELECTION_DIST = 5
+SELEC_DIST = 5
 
 current_mode = SKETCH_MODE
 export_svg = False
@@ -127,26 +127,28 @@ def mouse_pressed(mb):
 
 def over_element(element):
     # will have to check differently for circles, lines & quads...
-    kind = element[0]
-    element_fill, points = element[-2:]
+    kind, sw, sc, fc, points = element
     x0, y0 = points[0]
-    x1, y1 = points[1]
     if kind == CIRC_MODE:
+        x1, y1 = points[1]
         mouse_center_dist = dist(mouseX, mouseY, x0, y0)
         r = dist(x0, y0, x1, y1)
-        if element_fill:
+        if fc:
             return mouse_center_dist < r
         else:
-            return r - SELECTION_DIST < mouse_center_dist < r + SELECTION_DIST
+            return r - SELEC_DIST < mouse_center_dist < r + SELEC_DIST
     elif kind == QUAD_MODE:
         x2, y2 = points[2]
-        if element_fill:
+        if fc:
             return mouse_inside_box(x0, y0, x2, y2)
         else:
             return mouse_over_rect_edges(points)
+    elif kind == LINE_MODE:
+        x1, y1 = points[1]
+        return naive_point_over_line(mouseX, mouseY, x0, y0, x1, y1)
     else:
         for x, y in points:
-            if dist(mouseX, mouseY, x, y) < SELECTION_DIST:
+            if dist(mouseX, mouseY, x, y) < SELEC_DIST:
                 return True
         return False
 
@@ -184,6 +186,7 @@ def set_selection(i):
             current_selection.remove(i)
 
 def not_on_button():
+    """ Crude first aproach, not on bottom of screen..."""
     return mouseY < height - 50
 
 def mouse_dragged(mb):
@@ -217,15 +220,14 @@ def good_dist(last_px, last_py):
     return dist(mouseX, mouseY, last_px, last_py) > current_stroke_w
 
 def key_pressed(key, keyCode):
-    if key == CODED:
-        keys_down.add(keyCode)
-    else:
-        keys_down.add(key)
-
     global export_svg
     global current_stroke_w, current_stroke_c
     global current_fill, background_c
     global current_mode, current_selection
+    if key == CODED:
+        keys_down.add(keyCode)
+    else:
+        keys_down.add(key)
 
     if key in (BACKSPACE, DELETE) and drawing_elements:
         if current_mode != SELECT_MODE:
@@ -274,7 +276,7 @@ def treat_multi_keys():
 
 def mouse_wheel(event):
     amt = event.getCount()
-    # Rotate all points of selected elements
+    # Rotate or scale all points of selected elements
     if current_selection:
         if CONTROL in keys_down:
             anchor = (mouseX, mouseY)
@@ -305,7 +307,6 @@ def scale_points(pts, factor, origin):
         xr = x * factor
         yr = y * factor
         pts[i] = (xr + x0, yr + y0)
-
 
 def bounding_box(points):
     x_coordinates, y_coordinates = zip(*points)

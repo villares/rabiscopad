@@ -5,32 +5,35 @@ import interface
 drawing_elements = []
 
 def draw_elements():
-    # highlight selected object
+    # Highlight selected objects
     for i, element in enumerate(drawing_elements):
         if i in interface.current_selection:
-            strokeWeight(5 + interface.current_stroke_w)
+            _, sw, _, _, _ = element
+            strokeWeight(sw + interface.SELEC_DIST)
             stroke(255, 100, 100)
-            for x, y in element[-1]:
-                point(x, y)
-    # mouse over on selection mode
+            draw_plain_element(element)
+    # Mouse-over highlight on selection mode
     if interface.current_mode == interface.SELECT_MODE:
         for i, element in enumerate(drawing_elements):
-            strokeWeight(5 + interface.current_stroke_w)
+            _, sw, _, _, _ = element
+            strokeWeight(sw + interface.SELEC_DIST)
             stroke(255, 100, 255)
             if i not in interface.current_selection:
                 if interface.over_element(element):
-                    for x, y in element[-1]:
-                        point(x, y)
-
+                    draw_plain_element(element)
+    # Drawing actual elements!
     for element in drawing_elements:
-        kind, sw, sc, cf, points = element
+        kind, sw, sc, fc, points = element
         strokeWeight(sw)
         stroke(sc)
-        if cf:
-            fill(cf)
+        if fc:
+            fill(fc)
         else:
             noFill()
-
+        draw_plain_element(element)
+        
+def draw_plain_element(element):
+        kind, _, _, fc, points = element
         if kind == interface.CIRC_MODE and len(points) == 2:
             x, y = points[0]
             circle(x, y, 2 * dist(x, y, points[1][0], points[1][1]))
@@ -39,7 +42,7 @@ def draw_elements():
             beginShape()
             for p in points:
                 vertex(p[0], p[1])
-            if cf or kind == interface.QUAD_MODE:
+            if fc or kind == interface.QUAD_MODE:
                 endShape(CLOSE)
             else:
                 endShape()
