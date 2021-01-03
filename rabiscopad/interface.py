@@ -71,7 +71,7 @@ def setup_gui():
 
 def draw_gui(mp):
     """
-    Draw on-screen buttons 
+    Draw on-screen buttons
     """
     global current_selection
     Button.display_all(mp)
@@ -115,8 +115,8 @@ def mouse_pressed(mb):
             points
         )
         drawing_elements.append(current_element)
-    elif not_on_button(): 
-        # Treating current_mode == SELECT_MODE    
+    elif not_on_button():
+        # Treating current_mode == SELECT_MODE
         for i, element in reversed(list(enumerate(drawing_elements))):
             if over_element(element):
                 set_selection(i)
@@ -127,11 +127,51 @@ def mouse_pressed(mb):
 
 def over_element(element):
     # will have to check differently for circles, lines & quads...
-    points = element[-1]
-    for x, y in points:
-        if dist(mouseX, mouseY, x, y) < SELECTION_DIST:
-            return True
-    return False
+    kind = element[0]
+    element_fill, points = element[-2:]
+    x0, y0 = points[0]
+    x1, y1 = points[1]
+    if kind == CIRC_MODE:
+        mouse_center_dist = dist(mouseX, mouseY, x0, y0)
+        r = dist(x0, y0, x1, y1)
+        if element_fill:
+            return mouse_center_dist < r
+        else:
+            return r - SELECTION_DIST < mouse_center_dist < r + SELECTION_DIST
+    elif kind == QUAD_MODE:
+        x2, y2 = points[2]
+        if element_fill:
+            return mouse_inside_box(x0, y0, x2, y2)
+        else:
+            return mouse_over_rect_edges(points)
+    else:
+        for x, y in points:
+            if dist(mouseX, mouseY, x, y) < SELECTION_DIST:
+                return True
+        return False
+
+def mouse_inside_box(x0, y0, x1, y1):
+    return (x0 < mouseX < x1 and
+            y0 < mouseY < y1)
+
+def mouse_over_rect_edges(points):
+    return any(naive_point_over_line(mouseX, mouseY, lax, lay, lbx, lby)
+               for (lax, lay), (lbx, lby) in ((points[0], points[1]),
+                                              (points[1], points[2]),
+                                              (points[2], points[3]),
+                                              (points[3], points[0])))
+
+def naive_point_over_line(px, py, lax, lay, lbx, lby,
+                          tolerance=1):
+    """
+    Check if point is over line using the sum of
+    the distances from the point to the line ends
+    (the result has to be near equal for True).
+    """
+    ab = dist(lax, lay, lbx, lby)
+    pa = dist(lax, lay, px, py)
+    pb = dist(px, py, lbx, lby)
+    return (pa + pb) <= ab + tolerance
 
 def set_selection(i):
     global current_selection
