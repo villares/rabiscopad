@@ -36,7 +36,10 @@ class Button():
         fill(self.calc_fill(mouse_over))
         rectMode(CORNER)
         rect(self.x, self.y, self.w, self.h, B_RADIUS)
-        fill(self.txt_color)
+        if self.txt_color:
+            fill(self.txt_color)
+        else:
+            fill(0)
         textAlign(CENTER, CENTER)
         text(self.txt,
              self.x + self.w / 2,
@@ -100,7 +103,17 @@ class SColorButton(Button):
          for b in cls.button_list:
                 if b.txt_color == c:
                     b.exclusive_on()                                
-                
+
+class FColorButton(Button):
+    button_list = []
+
+    @classmethod
+    def set_active(cls, c):
+         for b in cls.button_list:
+                if b.txt_color == c:
+                    b.exclusive_on()    
+                                
+                                                                
 class ModeButton(Button):
     button_list = []
     
@@ -110,4 +123,3 @@ class ModeButton(Button):
                 if b.txt == m[0]:
                     b.exclusive_on()
                 
-        

@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from itertools import chain
 from drawing import drawing_elements
-from buttons import Button, SColorButton, ModeButton
+from buttons import Button, SColorButton, FColorButton, ModeButton
 
 # Constants for current_mode state, button texts & key shortcuts
 SKETCH_MODE = ('sketch', ' ')
@@ -41,22 +41,64 @@ keys_down = set()
 
 def setup_gui():
     # Stroke color selection show/hide
-    global s_menu_button
+    global s_menu_button, f_menu_button
     s_menu_button = Button(
         0, height - 50, 50, 50,
         txt='stroke\ncolor',
         func=Button.toggle)
+    f_menu_button = Button(
+        50, height - 50, 50, 50,
+        txt='fill\ncolor',
+        func=Button.toggle)
+    
+    # button function "callback" builders
+    def stroke_setter(c):
+        def setter(button):
+            global current_stroke_c
+            button.exclusive_on()
+            current_stroke_c = c
+        return setter
+    
+    def fill_setter(c):
+        def setter(button):
+            global current_fill
+            button.exclusive_on()
+            current_fill = c
+        return setter
+    
+    def mode_setter(m):
+        def setter(button):
+            global current_mode
+            button.exclusive_on()
+            current_mode = m
+        return setter    
+    
     # Stroke color palette buttons
     x = 50
     for c in COLORS:
         b = SColorButton(
             x, height - 50, 50, 50,
-            txt='•',
+            txt='●',
             txt_color=c,
-            func=color_setter(c))
+            func=stroke_setter(c))
         if c == 0:
             b.active = True
         x += 50
+    # Fill color palette buttons
+    x = 100
+    for c in COLORS:
+        b = FColorButton(
+            x, height - 50, 50, 50,
+            txt='■',
+            txt_color=c,
+            func=fill_setter(c))
+        x += 50
+    b = FColorButton(
+            x, height - 50, 50, 50,
+            txt='None',
+            txt_color=None,
+            func=fill_setter(None))
+    b.active = True
     # Mode selection buttons
     x = 100
     for m in MODES:
@@ -76,27 +118,17 @@ def draw_gui(mp):
     global current_selection
     Button.display_all(mp)
     s_menu_button.txt_color = current_stroke_c
+    f_menu_button.txt_color = current_fill
+
     if s_menu_button.active:
         SColorButton.display_all(mp)
+    elif f_menu_button.active:
+        FColorButton.display_all(mp)
     else:
         ModeButton.display_all(mp)
 
     if current_mode != SELECT_MODE:
         current_selection = []
-
-def color_setter(c):
-    def setter(button):
-        global current_stroke_c
-        button.exclusive_on()
-        current_stroke_c = c
-    return setter
-
-def mode_setter(m):
-    def setter(button):
-        global current_mode
-        button.exclusive_on()
-        current_mode = m
-    return setter
 
 def mouse_released(mb):
     global current_element
@@ -129,7 +161,7 @@ def over_element(element):
     # will have to check differently for circles, lines & quads...
     kind, sw, sc, fc, points = element
     x0, y0 = points[0]
-    if kind == CIRC_MODE:
+    if kind == CIRC_MODE and len(points) > 1:
         x1, y1 = points[1]
         mouse_center_dist = dist(mouseX, mouseY, x0, y0)
         r = dist(x0, y0, x1, y1)
@@ -137,13 +169,13 @@ def over_element(element):
             return mouse_center_dist < r
         else:
             return r - SELEC_DIST < mouse_center_dist < r + SELEC_DIST
-    elif kind == QUAD_MODE:
+    elif kind == QUAD_MODE and len(points) > 1:
         x2, y2 = points[2]
         if fc:
             return mouse_inside_box(x0, y0, x2, y2)
         else:
             return mouse_over_rect_edges(points)
-    elif kind == LINE_MODE:
+    elif kind == LINE_MODE and len(points) > 1:
         x1, y1 = points[1]
         return naive_point_over_line(mouseX, mouseY, x0, y0, x1, y1)
     else:

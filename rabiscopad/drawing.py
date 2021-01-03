@@ -5,22 +5,6 @@ import interface
 drawing_elements = []
 
 def draw_elements():
-    # Highlight selected objects
-    for i, element in enumerate(drawing_elements):
-        if i in interface.current_selection:
-            _, sw, _, _, _ = element
-            strokeWeight(sw + interface.SELEC_DIST)
-            stroke(255, 100, 100)
-            draw_plain_element(element)
-    # Mouse-over highlight on selection mode
-    if interface.current_mode == interface.SELECT_MODE:
-        for i, element in enumerate(drawing_elements):
-            _, sw, _, _, _ = element
-            strokeWeight(sw + interface.SELEC_DIST)
-            stroke(255, 100, 255)
-            if i not in interface.current_selection:
-                if interface.over_element(element):
-                    draw_plain_element(element)
     # Drawing actual elements!
     for element in drawing_elements:
         kind, sw, sc, fc, points = element
@@ -31,6 +15,24 @@ def draw_elements():
         else:
             noFill()
         draw_plain_element(element)
+    # Highlight selected objects
+    for i, element in enumerate(drawing_elements):
+        if i in interface.current_selection:
+            _, sw, _, _, _ = element
+            strokeWeight(sw + interface.SELEC_DIST)
+            stroke(255, 100, 100, 100)
+            noFill()
+            draw_plain_element(element)
+    # Mouse-over highlight on selection mode
+    if interface.current_mode == interface.SELECT_MODE:
+        for i, element in enumerate(drawing_elements):
+            _, sw, _, _, _ = element
+            strokeWeight(sw + interface.SELEC_DIST)
+            stroke(255, 100, 255, 100)
+            noFill()
+            if i not in interface.current_selection:
+                if interface.over_element(element):
+                    draw_plain_element(element)
         
 def draw_plain_element(element):
         kind, _, _, fc, points = element

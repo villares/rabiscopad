@@ -23,7 +23,7 @@ add_library('svg')
 
 def setup():
     # fullScreen()  # to use this, diable size()
-    size(500, 500)  # disable this to use fullScreen()
+    size(800, 600)  # disable this to use fullScreen()
     interface.setup_gui()
     
 def draw():
