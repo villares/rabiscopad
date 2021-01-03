@@ -18,10 +18,9 @@ def draw_elements():
             strokeWeight(5 + interface.current_stroke_w)
             stroke(255, 100, 255)
             if i not in interface.current_selection:
-                for x, y in element[-1]:
-                    if dist(x, y, mouseX, mouseY) < 5:
-                        for x, y in element[-1]:
-                            point(x, y)
+                if interface.over_element(element):
+                    for x, y in element[-1]:
+                        point(x, y)
 
     for element in drawing_elements:
         kind, sw, sc, cf, points = element

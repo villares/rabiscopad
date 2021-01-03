@@ -4,25 +4,29 @@ from itertools import chain
 from drawing import drawing_elements
 from buttons import Button, SColorButton, ModeButton
 
+# Constants for current_mode state, button texts & key shortcuts
 SKETCH_MODE = ('sketch', ' ')
 LINE_MODE = ('line', 'l')
 CIRC_MODE = ('circ', 'c')
 QUAD_MODE = ('rect', 'q')
 POLY_MODE = ('poly', 'p')  # not implemented
 SELECT_MODE = ('select', 'x')
+
 MODES = (SKETCH_MODE, LINE_MODE, CIRC_MODE,
          QUAD_MODE, POLY_MODE, SELECT_MODE)
 
-COLORS = [
-    0,  # black
-    50,  # dark grey
-    128,  # middle grey
-    220,  # light grey
-    255,  # white
+COLORS = [             # The main color palette:
+    0,                 # black
+    50,                # dark grey
+    128,               # middle grey
+    220,               # light grey
+    255,               # white
     color(200, 0, 0),  # red
     color(0, 200, 0),  # green
     color(0, 0, 200),  # blue
 ]
+
+SELECTION_DIST = 5
 
 current_mode = SKETCH_MODE
 export_svg = False
@@ -35,11 +39,13 @@ background_c = color(240, 240, 200)
 keys_down = set()
 
 def setup_gui():
+    # Stroke color selection show/hide
     global s_menu_button
     s_menu_button = Button(
         0, height - 50, 50, 50,
         txt='stroke\ncolor',
         func=Button.toggle)
+    # Stroke color palette buttons
     x = 50
     for c in COLORS:
         b = SColorButton(
@@ -50,7 +56,7 @@ def setup_gui():
         if c == 0:
             b.active = True
         x += 50
-
+    # Mode selection buttons
     x = 100
     for m in MODES:
         b = ModeButton(
@@ -61,7 +67,6 @@ def setup_gui():
         if m == SKETCH_MODE:
             b.active = True
         x += 50
-
 
 def draw_gui(mp):
     """
@@ -99,7 +104,7 @@ def mouse_released(mb):
 def mouse_pressed(mb):
     global current_element, current_selection
     if not_on_button() and current_mode != SELECT_MODE:
-        # SKETCH_MODE, LINE_MODE, CIRC_MODE & etc.
+        # Treating SKETCH_MODE, LINE_MODE, CIRC_MODE & etc.
         points = [(mouseX, mouseY)]
         current_element = (
             current_mode,      # kind
@@ -109,23 +114,33 @@ def mouse_pressed(mb):
             points
         )
         drawing_elements.append(current_element)
-    elif not_on_button():  # current_mode == SELECT_MODE
+    elif not_on_button(): 
+        # Treating current_mode == SELECT_MODE    
         for i, element in reversed(list(enumerate(drawing_elements))):
-            # will have to check differently for circles...
-            points = element[-1]
-            for j, pt in enumerate(points):
-                if dist(mouseX, mouseY, pt[0], pt[1]) < 5:
-
-                    if SHIFT not in keys_down:
-                        current_selection = [i]
-                    else:
-                        if i not in current_selection:
-                            current_selection.append(i)
-                        else:
-                            current_selection.remove(i)
-                    return
+            if over_element(element):
+                set_selection(i)
+                return
+        # if no element is picked, and no SHIFT held, desselect all
         if SHIFT not in keys_down:
             current_selection = []
+
+def over_element(element):
+    # will have to check differently for circles, lines & quads...
+    points = element[-1]
+    for x, y in points:
+        if dist(mouseX, mouseY, x, y) < SELECTION_DIST:
+            return True
+    return False
+
+def set_selection(i):
+    global current_selection
+    if SHIFT not in keys_down:
+        current_selection = [i]
+    else:
+        if i not in current_selection:
+            current_selection.append(i)
+        else:
+            current_selection.remove(i)
 
 def not_on_button():
     return mouseY < height - 50
@@ -157,10 +172,8 @@ def move_points(pts, dx, dy):
     for i, (x, y) in enumerate(pts):
         pts[i] = (x + dx, y + dy)
 
-
 def good_dist(last_px, last_py):
     return dist(mouseX, mouseY, last_px, last_py) > current_stroke_w
-
 
 def key_pressed(key, keyCode):
     if key == CODED:
@@ -251,7 +264,6 @@ def scale_points(pts, factor, origin):
         xr = x * factor
         yr = y * factor
         pts[i] = (xr + x0, yr + y0)
-
 
 
 def bounding_box(points):
