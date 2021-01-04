@@ -13,7 +13,9 @@ v2020_12_24 crude attempt at selection mode
 v2020_12_27 mode buttons, multiple key detection (to get SHIFT)
             multiple selection (with SHIFT), moving selected
 v2021_01_02 Rotate with mouse wheel, CONTROL to change center of rotation
-v2021_02_03 Better selection
+v2021_02_03 Better selection (for rect, line, circle), highlights are now
+            translucent over drawing. Added fill selection buttons.
+            Experimental window resize. Changed some shortcuts!
 """
 
 import interface
@@ -25,6 +27,7 @@ def setup():
     # fullScreen()  # to use this, diable size()
     size(800, 600)  # disable this to use fullScreen()
     interface.setup_gui()
+    this.surface.setResizable(True)
     
 def draw():
     background(interface.background_c)

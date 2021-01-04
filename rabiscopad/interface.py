@@ -8,7 +8,7 @@ from buttons import Button, SColorButton, FColorButton, ModeButton
 SKETCH_MODE = ('sketch', ' ')
 LINE_MODE = ('line', 'l')
 CIRC_MODE = ('circ', 'c')
-QUAD_MODE = ('rect', 'q')
+QUAD_MODE = ('rect', 'r')
 POLY_MODE = ('poly', 'p')  # not implemented
 SELECT_MODE = ('select', 'x')
 
@@ -28,6 +28,7 @@ COLORS = [             # The main color palette:
 ]
 
 SELEC_DIST = 5
+B_SIZE = 50  # Button size
 
 current_mode = SKETCH_MODE
 export_svg = False
@@ -43,11 +44,11 @@ def setup_gui():
     # Stroke color selection show/hide
     global s_menu_button, f_menu_button
     s_menu_button = Button(
-        0, height - 50, 50, 50,
+        0, -B_SIZE, B_SIZE, B_SIZE,
         txt='stroke\ncolor',
         func=Button.toggle)
     f_menu_button = Button(
-        50, height - 50, 50, 50,
+        B_SIZE, -B_SIZE, B_SIZE, B_SIZE,
         txt='fill\ncolor',
         func=Button.toggle)
     
@@ -74,27 +75,27 @@ def setup_gui():
         return setter    
     
     # Stroke color palette buttons
-    x = 50
+    x = B_SIZE
     for c in COLORS:
         b = SColorButton(
-            x, height - 50, 50, 50,
+            x, -B_SIZE, B_SIZE, B_SIZE,
             txt='●',
             txt_color=c,
             func=stroke_setter(c))
         if c == 0:
             b.active = True
-        x += 50
+        x += B_SIZE
     # Fill color palette buttons
-    x = 100
+    x = B_SIZE * 2
     for c in COLORS:
         b = FColorButton(
-            x, height - 50, 50, 50,
+            x, -B_SIZE, B_SIZE, B_SIZE,
             txt='■',
             txt_color=c,
             func=fill_setter(c))
         x += 50
     b = FColorButton(
-            x, height - 50, 50, 50,
+            x, -B_SIZE, B_SIZE, B_SIZE,
             txt='None',
             txt_color=None,
             func=fill_setter(None))
@@ -103,13 +104,13 @@ def setup_gui():
     x = 100
     for m in MODES:
         b = ModeButton(
-            x, height - 50, 50, 50,
+            x, -B_SIZE, B_SIZE, B_SIZE,
             txt=m[0],
             txt_color=0,
             func=mode_setter(m))
         if m == SKETCH_MODE:
             b.active = True
-        x += 50
+        x += B_SIZE
 
 def draw_gui(mp):
     """
@@ -219,7 +220,7 @@ def set_selection(i):
 
 def not_on_button():
     """ Crude first aproach, not on bottom of screen..."""
-    return mouseY < height - 50
+    return mouseY < height - B_SIZE
 
 def mouse_dragged(mb):
     if current_element:
@@ -271,8 +272,8 @@ def key_pressed(key, keyCode):
                 drawing_elements.remove(el)
             current_selection = []
 
-    if key == 'r':  # Reset
-        if yes_no_pane("ATENTION", "Reset, erase all elements?") == 0:
+    if key == 'e':  # Erase all
+        if yes_no_pane("ATENTION", "Erase all elements?") == 0:
             drawing_elements[:] = []
     if key == 's':
         export_svg = True

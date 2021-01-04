@@ -25,17 +25,19 @@ class Button():
         self.button_list.append(self)
 
     def mouse_over(self):
+        self.z = self.y if self.y > 0 else height + self.y
         return (self.x < mouseX < self.x + self.w and
-                self.y < mouseY < self.y + self.h)
+                self.z < mouseY < self.z + self.h)
 
     def display(self, mp):
+        self.z = self.y if self.y > 0 else height + self.y
         mouse_over = self.mouse_over()
         pushStyle()
         strokeWeight(1)
         stroke(0)
         fill(self.calc_fill(mouse_over))
         rectMode(CORNER)
-        rect(self.x, self.y, self.w, self.h, B_RADIUS)
+        rect(self.x, self.z, self.w, self.h, B_RADIUS)
         if self.txt_color:
             fill(self.txt_color)
         else:
@@ -43,7 +45,7 @@ class Button():
         textAlign(CENTER, CENTER)
         text(self.txt,
              self.x + self.w / 2,
-             self.y + self.h / 2)
+             self.z + self.h / 2)
         if self.check(mouse_over, mp):
             self.func(self)
         popStyle()
