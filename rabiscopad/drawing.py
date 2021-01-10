@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from collections import namedtuple
+
 import interface
 
 drawing_elements = []
+
+Element = namedtuple('Element', 'kind sc sw fc points')
+
 
 def draw_elements():
     # Drawing actual elements!

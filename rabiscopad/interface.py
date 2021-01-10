@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from itertools import chain
-from drawing import drawing_elements
+
+from drawing import drawing_elements, Element
 from buttons import Button, SColorButton, FColorButton, ModeButton
 
 # Constants for current_mode state, button texts & key shortcuts
@@ -140,12 +142,12 @@ def mouse_pressed(mb):
     if not_on_button() and current_mode != SELECT_MODE:
         # Treating SKETCH_MODE, LINE_MODE, CIRC_MODE & etc.
         points = [(mouseX, mouseY)]
-        current_element = (
-            current_mode,      # kind
-            current_stroke_w,  # stroke weight
-            current_stroke_c,  # stroke color
-            current_fill,
-            points
+        current_element = Element(  # a named tuple!
+            current_mode,      # .kind
+            current_stroke_w,  # .sw stroke weight
+            current_stroke_c,  # .sc stroke color
+            current_fill,      # .fc fill color
+            points             # .points
         )
         drawing_elements.append(current_element)
     elif not_on_button():
