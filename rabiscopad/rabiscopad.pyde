@@ -17,6 +17,7 @@ v2021_01_03 Better selection (for rect, line, circle), highlights are now
             translucent over drawing. Added fill selection buttons.
             Experimental window resize. Changed some shortcuts!
 v2021_01_10 Let's try Named tuples!!!
+            ctrl+S to save, and with timestamp on filename
 """
 
 import interface
@@ -29,7 +30,8 @@ def setup():
     size(800, 600)  # disable this to use fullScreen()
     interface.setup_gui()
     this.surface.setResizable(True)
-    
+
+        
 def draw():
     background(interface.background_c)
     drawing.draw_elements()
@@ -39,7 +41,7 @@ def draw():
         endRecord()
 
     interface.draw_gui(mousePressed)
-    interface.treat_multi_keys() # not implemented
+
 
 def mousePressed():
     interface.mouse_pressed(mouseButton)

@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from itertools import chain
+from datetime import datetime
 
 from drawing import drawing_elements, Element
 from buttons import Button, SColorButton, FColorButton, ModeButton
@@ -173,7 +174,7 @@ def over_element(element):
             return r - SELEC_DIST < mouse_center_dist < r + SELEC_DIST
     elif element.kind == QUAD_MODE and len(element.points) > 1:
         x2, y2 = element.points[2]
-        if fc:
+        if element.fc:
             return mouse_inside_box(x0, y0, x2, y2)
         else:
             return mouse_over_rect_edges(element.points)
@@ -271,12 +272,13 @@ def key_pressed(key, keyCode):
                 drawing_elements.remove(el)
             current_selection = []
 
-    if key == 'e':  # Erase all
+    if check_key('e'):  # Erase all
         if yes_no_pane("ATENTION", "Erase all elements?") == 0:
             drawing_elements[:] = []
-    if key == 's':
+    if check_key('s') and control_command():
         export_svg = True
-        svg = createGraphics(width, height, SVG, 'sketch.svg')
+        file_name =  'sketch-{}.svg'.format(datetime.now())
+        svg = createGraphics(width, height, SVG, file_name)
         beginRecord(svg)
     if key in ('+', '='):
         current_stroke_w += 1
@@ -301,10 +303,12 @@ def key_released(key, keyCode):
     else:
         keys_down.discard(key)
 
-def treat_multi_keys():
-    # this will be needed for multi-key shortcuts
-    pass
+def check_key(k):
+    """ Check key pressed independent of SHIFT & CAPSLOCK """
+    return keyCode == ord(k.upper())
 
+def control_command():
+    return (CONTROL in keys_down) or (157 in keys_down)  # supposedly MacOS COMMAND key
 
 def mouse_wheel(event):
     amt = event.getCount()

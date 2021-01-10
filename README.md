@@ -21,14 +21,14 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 
 ### Keyboard shortcuts:
 
-- <kbd>s</kbd> save SVG
+- <kbd>CONTROL+s</kbd> save SVG
 - <kbd>c</kbd> draw circle mode
 - <kbd>l</kbd> draw line mode
-- <kbd>q</kbd> draw quad/rectangle mode
-- <kbd>space</kbd> free drawing mode
+- <kbd>r</kbd> draw quad/rectangle mode
+- <kbd>s</kbd> free drawing 'sketch' mode
 - <kbd>x</kbd> selection mode
 - <kbd>backspace</kbd> or <kbd>delete</kbd> erase last element or selected element
-- <kbd>r</kbd> erase all
+- <kbd>e</kbd> erase all
 - <kbd>+</kbd> and <kbd>-</kbd> change stroke weight
 
 ### Mouse Wheel
@@ -48,6 +48,11 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 	multiple selection (with SHIFT), moving selected objects with mouse drag
 - v2021_01_02 Rotate selected objects with mouse wheel SHIFT will scale,
 	CONTROL to change center of rotation/scaling
+- v2021_01_03 Better selection (for rect, line, circle), highlights are now
+       translucent over drawing. Added fill selection buttons.
+       Experimental window resize. Changed some shortcuts!
+- v2021_01_10 Let's try Named tuples!!!
+       Ctrl+s to save, and with timestamp on filename
 
 ![image1](docs/assets/readme_animation1.gif)
 ![image2](docs/assets/readme_animation2.gif)
@@ -61,8 +66,9 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
     - [ ] stroke weight
     - [X] drawing modes 
 	
-- [ ] save SVG with timestamp on name
-	- [ ] save SVG to user selected file
+- [WIP] save SVG with timestamp on name
+	- [X] saving SVG on sketch folder with timestamp name!
+	- [ ] save SVG to user selected location
 
 - [ ] load & save drawing
 	- HARDER: load SVG and parse elements to allow editing saved file
@@ -96,8 +102,8 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 	- change background
 	- resize the window (maybe nasty)
 	
-- [ ] two-key keyboard shortcuts (a bit of trouble)
-	- <kbd>cmd/ctrl + s</kbd> --> save
+- [WIP] two-key keyboard shortcuts 
+	- [X] <kbd>cmd/ctrl + s</kbd> --> save
 	- <kbd>cmd/ctrl + z</kbd> --> undo (maybe hard, but I had some ideas...)
 	- <kbd>cmd/ctrl + r</kbd> --> redo (see above)
 	- <kbd>cmd/ctrl + d</kbd> --> duplicate selected / last drawn 
