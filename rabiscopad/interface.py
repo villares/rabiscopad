@@ -162,27 +162,26 @@ def mouse_pressed(mb):
 
 def over_element(element):
     # will have to check differently for circles, lines & quads...
-    kind, sw, sc, fc, points = element
-    x0, y0 = points[0]
-    if kind == CIRC_MODE and len(points) > 1:
-        x1, y1 = points[1]
+    x0, y0 = element.points[0]
+    if element.kind == CIRC_MODE and len(element.points) > 1:
+        x1, y1 = element.points[1]
         mouse_center_dist = dist(mouseX, mouseY, x0, y0)
         r = dist(x0, y0, x1, y1)
-        if fc:
+        if element.fc:
             return mouse_center_dist < r
         else:
             return r - SELEC_DIST < mouse_center_dist < r + SELEC_DIST
-    elif kind == QUAD_MODE and len(points) > 1:
-        x2, y2 = points[2]
+    elif element.kind == QUAD_MODE and len(element.points) > 1:
+        x2, y2 = element.points[2]
         if fc:
             return mouse_inside_box(x0, y0, x2, y2)
         else:
-            return mouse_over_rect_edges(points)
-    elif kind == LINE_MODE and len(points) > 1:
-        x1, y1 = points[1]
+            return mouse_over_rect_edges(element.points)
+    elif element.kind == LINE_MODE and len(element.points) > 1:
+        x1, y1 = element.points[1]
         return naive_point_over_line(mouseX, mouseY, x0, y0, x1, y1)
     else:
-        for x, y in points:
+        for x, y in element.points:
             if dist(mouseX, mouseY, x, y) < SELEC_DIST:
                 return True
         return False
@@ -226,26 +225,24 @@ def not_on_button():
 
 def mouse_dragged(mb):
     if current_element:
-        points = current_element[-1]
-        last_px, last_py = points[-1]
+        last_px, last_py = current_element.points[-1]
         if current_mode == SKETCH_MODE and good_dist(last_px, last_py):
-            points.append((mouseX, mouseY))
+            current_element.points.append((mouseX, mouseY))
         elif current_mode in (LINE_MODE,
                               CIRC_MODE,
                               ):
-            x0, y0 = points[0]
-            points[:] = (x0, y0), (mouseX, mouseY)
+            x0, y0 = current_element.points[0]
+            current_element.points[:] = (x0, y0), (mouseX, mouseY)
         elif current_mode == QUAD_MODE:
-            x0, y0 = points[0]
-            points[:] = ((x0, y0), (mouseX, y0),
+            x0, y0 = current_element.points[0]
+            current_element.points[:] = ((x0, y0), (mouseX, y0),
                          (mouseX, mouseY), (x0, mouseY))
 
     if current_mode == SELECT_MODE:
         for i in current_selection:
             element = drawing_elements[i]
-            points = element[-1]
             dx, dy = mouseX - pmouseX, mouseY - pmouseY
-            move_points(points, dx, dy)
+            move_points(element.points, dx, dy)
 
 def move_points(pts, dx, dy):
     for i, (x, y) in enumerate(pts):
@@ -316,16 +313,15 @@ def mouse_wheel(event):
         if CONTROL in keys_down:
             anchor = (mouseX, mouseY)
         else:
-            points = (drawing_elements[i][-1] for i in current_selection)
+            points = (drawing_elements[i].points for i in current_selection)
             bb = bounding_box(chain(*points))
             anchor = midpoint(bb)
         for i in current_selection:
             element = drawing_elements[i]
-            points = element[-1]
             if SHIFT in keys_down:
-                scale_points(points, 1 + amt / 100.0, anchor)
+                scale_points(element.points, 1 + amt / 100.0, anchor)
             else:
-                rotate_points(points, amt / 10.0, anchor)
+                rotate_points(element.points, amt / 10.0, anchor)
 
 def rotate_points(pts, angle, origin):
     x0, y0 = origin
