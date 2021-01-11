@@ -285,6 +285,7 @@ def key_pressed(key, keyCode):
     # Increase stroke weight
     elif key in ('+', '='):
         current_stroke_w += 1
+    # Decrease stroke weight
     elif key == '-' and current_stroke_w > 1:
         current_stroke_w -= 1
     # Select stroke color - without str() you'll crash when key is an int code!
