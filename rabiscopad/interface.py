@@ -264,25 +264,30 @@ def key_pressed(key, keyCode):
         keys_down.add(key)
     # Treat "normal" keyboard commands
     if key in (BACKSPACE, DELETE) and drawing_elements:
+        # if not in selection mode, delete last drawn element
         if current_mode != SELECT_MODE:
             drawing_elements.pop()
+        # otherwise, delete selected elements    
         elif current_selection:
             to_del = [drawing_elements[i]
                       for i in current_selection]
             for el in to_del:
                 drawing_elements.remove(el)
             current_selection = []
-    elif check_key('e'):  # Erase all
+    # Erase all elements (with confirmation)
+    elif check_key('e'): 
         if yes_no_pane("ATENTION", "Erase all elements?") == 0:
             drawing_elements[:] = []
-    elif check_key('s') and control_command():
+    # Save SVG file!
+    elif check_key('s', CONTROL): # COMMAND on MacOS (untested)
         proposed_name =  File('sketch-{}.svg'.format(datetime.now()))
         selectOutput("Save a SVG:", "export_svg", proposed_name)
+    # Increase stroke weight
     elif key in ('+', '='):
         current_stroke_w += 1
     elif key == '-' and current_stroke_w > 1:
         current_stroke_w -= 1
-    # without str() you crash when key is an int code!
+    # Select stroke color - without str() you'll crash when key is an int code!
     elif str(key) in STROKE_COLOR_SHORTCUTS:
         current_stroke_c = COLORS[int(key)]
         SColorButton.set_active(current_stroke_c)
@@ -300,13 +305,15 @@ def key_released(key, keyCode):
     else:
         keys_down.discard(key)
 
-def check_key(k):
+def check_key(k, modifier=None):
     """ Check key pressed independent of SHIFT & CAPSLOCK """
-    return keyCode == ord(k.upper())
-
-def control_command():
-    return (CONTROL in keys_down) or (157 in keys_down)  # supposedly MacOS COMMAND key
-
+    if modifier is None:
+        return keyCode == ord(k.upper())
+    else:
+        if modifier == CONTROL and this.platform == MACOSX:
+            modifier = 157 # COMMAND KEY (untested)
+        return keyCode == ord(k.upper()) and modifier in keys_down
+        
 def mouse_wheel(event):
     amt = event.getCount()
     # Rotate or scale all points of selected elements
