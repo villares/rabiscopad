@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from itertools import chain
 from datetime import datetime
+from java.io import File
 
 from drawing import drawing_elements, Element
 from buttons import Button, SColorButton, FColorButton, ModeButton
@@ -34,7 +35,7 @@ SELEC_DIST = 5
 B_SIZE = 50  # Button size
 
 current_mode = SKETCH_MODE
-export_svg = False
+export_svg_flag = False
 current_stroke_w = 2
 current_stroke_c = color(0)
 current_fill = None
@@ -261,7 +262,7 @@ def key_pressed(key, keyCode):
         keys_down.add(keyCode)
     else:
         keys_down.add(key)
-
+    # Treat "normal" keyboard commands
     if key in (BACKSPACE, DELETE) and drawing_elements:
         if current_mode != SELECT_MODE:
             drawing_elements.pop()
@@ -271,24 +272,20 @@ def key_pressed(key, keyCode):
             for el in to_del:
                 drawing_elements.remove(el)
             current_selection = []
-
-    if check_key('e'):  # Erase all
+    elif check_key('e'):  # Erase all
         if yes_no_pane("ATENTION", "Erase all elements?") == 0:
             drawing_elements[:] = []
-    if check_key('s') and control_command():
-        export_svg = True
-        file_name =  'sketch-{}.svg'.format(datetime.now())
-        svg = createGraphics(width, height, SVG, file_name)
-        beginRecord(svg)
-    if key in ('+', '='):
+    elif check_key('s') and control_command():
+        proposed_name =  File('sketch-{}.svg'.format(datetime.now()))
+        selectOutput("Save a SVG:", "export_svg", proposed_name)
+    elif key in ('+', '='):
         current_stroke_w += 1
-    if key == '-' and current_stroke_w > 1:
+    elif key == '-' and current_stroke_w > 1:
         current_stroke_w -= 1
     # without str() you crash when key is an int code!
-    if str(key) in STROKE_COLOR_SHORTCUTS:
+    elif str(key) in STROKE_COLOR_SHORTCUTS:
         current_stroke_c = COLORS[int(key)]
         SColorButton.set_active(current_stroke_c)
-
     # treat keyboard shortcuts for modes
     for m in MODES:
         t, k = m  # button text, shortcut key

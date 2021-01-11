@@ -18,6 +18,7 @@ v2021_01_03 Better selection (for rect, line, circle), highlights are now
             Experimental window resize. Changed some shortcuts!
 v2021_01_10 Let's try Named tuples!!!
             ctrl+S to save, and with timestamp on filename
+v2021_01_11 Choose output location on save
 """
 
 import interface
@@ -36,8 +37,8 @@ def draw():
     background(interface.background_c)
     drawing.draw_elements()
 
-    if interface.export_svg:
-        interface.export_svg = False
+    if interface.export_svg_flag:
+        interface.export_svg_flag = False
         endRecord()
 
     interface.draw_gui(mousePressed)
@@ -60,7 +61,18 @@ def keyReleased():
     
 def mouseWheel(e): 
     interface.mouse_wheel(e)    
-    
+
+def export_svg(selection):
+    if selection:
+        print(selection)
+        interface.export_svg_flag = True
+        print(interface.export_svg_flag)
+        print("Saving file at: " + selection.getAbsolutePath())
+        svg = createGraphics(width, height, SVG, selection.getAbsolutePath())
+        beginRecord(svg)
+    else:
+        print("No file was saved")
+            
 # def stop():
 #     r = interface.yes_no_pane("Closing!", "Would you like to save session?")
 #     if r == 0:
