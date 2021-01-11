@@ -66,9 +66,9 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
     - [ ] stroke weight
     - [X] drawing modes 
 	
-- [WIP] save SVG with timestamp on name
+- [X] save SVG with timestamp on name
 	- [X] saving SVG on sketch folder with timestamp name!
-	- [ ] save SVG to user selected location
+	- [X] save SVG to user selected location
 
 - [ ] load & save drawing
 	- HARDER: load SVG and parse elements to allow editing saved file
