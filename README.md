@@ -54,6 +54,7 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 - v2021_01_10 Let's try Named tuples!!!
        Ctrl+s to save, and with timestamp on filename
 
+
 ![image1](docs/assets/readme_animation1.gif)
 ![image2](docs/assets/readme_animation2.gif)
 
@@ -64,7 +65,8 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 - [X] GUI buttons (can be improved a lot)
     - [X] stroke/pen colors
     - [ ] stroke weight
-    - [X] drawing modes 
+    - [X] drawing modes
+    - [ ] changing background color 
 	
 - [X] save SVG with timestamp on name
 	- [X] saving SVG on sketch folder with timestamp name!
@@ -72,16 +74,15 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 
 - [ ] load & save drawing
 	- HARDER: load SVG and parse elements to allow editing saved file
-	- EASIER: save/load session data in a serialized file
-		REALLY EASY: pickle
-		I'd have to look: JSON
+	- EASIER: save/load session data in a serialized file (I should look at: JSON and YAML)
+	- REALLY EASY: pickle (dump and load of `drawing_elements` list is a nobrainer)
 
-- [ ] modes & elements
+- [WIP] modes & elements
 	- [X] line
 	- [X] circle
 	- [X] "quad"/rectangle
 	- [ ] triangle / regular polygon ?
-	- [ ] polygon
+	- [ ] polygon ?
 	- [X] select/edit mode
 		- erase selected element
 		- drag mouse to move them
@@ -94,19 +95,19 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 	- to objects (possibly very hard)
 
 - [ ] other features:
-	- import image - maybe hard
+	- import image - maybe cumbersome (and involved decisons)
 	- export raster image (PNG) - easy peasy
 	- import / open SVG (hard if you want to edit things, easy otherwise)
-	- layers (maybe hard)
-	- zoom and pan (maybe hard...)
-	- change background
-	- resize the window (maybe nasty)
+	- layers (maybe hard, hard UI)
+	- zoom and pan (maybe hard... maybe we don't want to tackle this)
+	- [ ] change background
+	- [X] resize the window (done! check for nasty consequences!)
 	
 - [WIP] two-key keyboard shortcuts 
 	- [X] <kbd>cmd/ctrl + s</kbd> --> save
+	- [ ] <kbd>cmd/ctrl + d</kbd> --> duplicate selected / last drawn 
 	- <kbd>cmd/ctrl + z</kbd> --> undo (maybe hard, but I had some ideas...)
 	- <kbd>cmd/ctrl + r</kbd> --> redo (see above)
-	- <kbd>cmd/ctrl + d</kbd> --> duplicate selected / last drawn 
 	
 
 
