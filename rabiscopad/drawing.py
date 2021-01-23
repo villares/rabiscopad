@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from collections import namedtuple
-
+from collections import namedtuple, deque
 import interface
 
+UNDOS = 10
 drawing_elements = []
-
+drawing_history = deque(maxlen=UNDOS)
+redo_cache = []
 Element = namedtuple('Element', 'kind sw sc fc points')
 
 

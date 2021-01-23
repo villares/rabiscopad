@@ -19,6 +19,7 @@ v2021_01_03 Better selection (for rect, line, circle), highlights are now
 v2021_01_10 Let's try Named tuples!!!
             ctrl+S to save, and with timestamp on filename
 v2021_01_11 Choose output location on save
+v2021_01_23 First undo ideas
 """
 
 import interface

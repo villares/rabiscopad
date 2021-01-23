@@ -4,8 +4,9 @@ from __future__ import unicode_literals
 from itertools import chain
 from datetime import datetime
 from java.io import File
+from copy import deepcopy
 
-from drawing import drawing_elements, Element
+from drawing import drawing_elements, drawing_history, redo_cache, Element
 from buttons import Button, SColorButton, FColorButton, ModeButton
 
 # Constants for current_mode state, button texts & key shortcuts
@@ -141,6 +142,7 @@ def mouse_released(mb):
 
 def mouse_pressed(mb):
     global current_element, current_selection
+    undo_checkpoint()
     if not_on_button() and current_mode != SELECT_MODE:
         # Treating SKETCH_MODE, LINE_MODE, CIRC_MODE & etc.
         points = [(mouseX, mouseY)]
@@ -254,7 +256,7 @@ def good_dist(last_px, last_py):
     return dist(mouseX, mouseY, last_px, last_py) > current_stroke_w
 
 def key_pressed(key, keyCode):
-    global export_svg
+    global drawing_elements, export_svg
     global current_stroke_w, current_stroke_c
     global current_fill, background_c
     global current_mode, current_selection
@@ -264,6 +266,7 @@ def key_pressed(key, keyCode):
         keys_down.add(key)
     # Treat "normal" keyboard commands
     if key in (BACKSPACE, DELETE) and drawing_elements:
+        undo_checkpoint()
         # if not in selection mode, delete last drawn element
         if current_mode != SELECT_MODE:
             drawing_elements.pop()
@@ -277,11 +280,19 @@ def key_pressed(key, keyCode):
     # Erase all elements (with confirmation)
     elif check_key('e'): 
         if yes_no_pane("ATENTION", "Erase all elements?") == 0:
+            undo_checkpoint()
             drawing_elements[:] = []
     # Save SVG file!
-    elif check_key('s', CONTROL): # COMMAND on MacOS (untested)
+    elif check_key('s', CONTROL): # COMMAND on MacOS 
         proposed_name =  File('sketch-{}.svg'.format(datetime.now()))
         selectOutput("Save a SVG:", "export_svg", proposed_name)
+    # Undo
+    elif check_key('z', CONTROL) and drawing_history: # COMMAND on MacOS 
+        redo_cache.append(deepcopy(drawing_elements))
+        drawing_elements[:] = drawing_history.pop()
+    elif check_key('y', CONTROL) and redo_cache: # COMMAND on MacOS 
+        drawing_history.append(redo_cache.pop())
+        drawing_elements[:] =   drawing_history[-1]      
     # Increase stroke weight
     elif key in ('+', '='):
         current_stroke_w += 1
@@ -295,7 +306,7 @@ def key_pressed(key, keyCode):
     # treat keyboard shortcuts for modes
     for m in MODES:
         t, k = m  # button text, shortcut key
-        if key == k:
+        if  check_key(k):
             current_mode = m
             # and set gui button according!
             ModeButton.set_active(current_mode)
@@ -355,6 +366,14 @@ def bounding_box(points):
 
 def midpoint(t):
     return ((t[0][0] + t[1][0]) / 2.0, (t[0][1] + t[1][1]) / 2.0)
+
+def undo_checkpoint():
+    if drawing_history:
+        if drawing_history[-1] != drawing_elements:
+                drawing_history.append(deepcopy(drawing_elements))
+                redo_cache[:] = []
+    else:
+        drawing_history.append(deepcopy(drawing_elements))
 
 def yes_no_pane(title, message):
     # 0:Yes, 1:No,-1:Canceled/Closed
