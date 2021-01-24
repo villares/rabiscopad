@@ -9,7 +9,6 @@ drawing_history = deque(maxlen=UNDOS)
 redo_cache = []
 Element = namedtuple('Element', 'kind sw sc fc points')
 
-
 def draw_elements():
     # Drawing actual elements!
     for element in drawing_elements:
