@@ -53,10 +53,10 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
        Experimental window resize. Changed some shortcuts!
 - v2021_01_10 Let's try Named tuples!!!
        Ctrl+s to save, and with timestamp on filename
+- v2021_01_23 First Undo attempt
 
+![image1](docs/assets/readme_animation0.gif)
 
-![image1](docs/assets/readme_animation1.gif)
-![image2](docs/assets/readme_animation2.gif)
 
 ---
 
@@ -106,8 +106,8 @@ Developed by [Alexandre B A Villares](http://twitter.com/villares) and [Foad S. 
 - [WIP] two-key keyboard shortcuts 
 	- [X] <kbd>cmd/ctrl + s</kbd> --> save
 	- [ ] <kbd>cmd/ctrl + d</kbd> --> duplicate selected / last drawn 
-	- <kbd>cmd/ctrl + z</kbd> --> undo (maybe hard, but I had some ideas...)
-	- <kbd>cmd/ctrl + r</kbd> --> redo (see above)
+	- [X] Experimental! <kbd>cmd/ctrl + z</kbd> --> undo 
+	- [X] Experimental! <kbd>cmd/ctrl + r</kbd> --> redo (see above)
 	
 
 
