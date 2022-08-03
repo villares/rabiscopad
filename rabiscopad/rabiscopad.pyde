@@ -27,13 +27,14 @@ import drawing
 
 add_library('svg')
 
+
 def setup():
     # fullScreen()  # to use this, diable size()
     size(800, 600)  # disable this to use fullScreen()
     interface.setup_gui()
     this.surface.setResizable(True)
 
-        
+
 def draw():
     background(interface.background_c)
     drawing.draw_elements()
@@ -48,20 +49,26 @@ def draw():
 def mousePressed():
     interface.mouse_pressed(mouseButton)
 
+
 def mouseReleased():
     interface.mouse_released(mouseButton)
+
 
 def mouseDragged():
     interface.mouse_dragged(mouseButton)
 
+
 def keyPressed():
     interface.key_pressed(key, keyCode)
 
+
 def keyReleased():
     interface.key_released(key, keyCode)
-    
-def mouseWheel(e): 
-    interface.mouse_wheel(e)    
+
+
+def mouseWheel(e):
+    interface.mouse_wheel(e)
+
 
 def export_svg(selection):
     if selection:
@@ -73,7 +80,7 @@ def export_svg(selection):
         beginRecord(svg)
     else:
         print("No file was saved")
-            
+
 # def stop():
 #     r = interface.yes_no_pane("Closing!", "Would you like to save session?")
 #     if r == 0:
